@@ -1,0 +1,57 @@
+
+#head{
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: gray;
+  font-size: 30pt;
+}
+#score{
+  width: 100px;
+  text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+  color: gray;
+  font-size: 30pt;
+  position: absolute;
+  top: 430px;
+  left: 628px;
+}
+#lose{
+  display: none;
+  text-align: center;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size:20pt;
+  color:white;
+  word-wrap:normal;
+  width:340px;
+  height:300px;
+  padding:30px;
+  position:absolute;
+  top:140px;
+  left:480px;
+  background-color:rgba(200,180,150,0.8);
+}
+#lose #enjoy_again{
+  background-color: rgba(180,180,200,0.8);
+  line-height: 50px; 
+  height: 50px;
+  cursor: pointer;
+}
+#lose #enjoy_again:hover{
+
+  background-color: rgb(180,180,200);
+}
+#introduction, #about{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color:gray;
+  font-size:18pt;
+}
+#introduction p{
+  width: 400px;
+  position: relative;
+  left: 480px;
+}
+#about{
+  text-align: center;
+}
