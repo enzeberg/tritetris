@@ -7,6 +7,7 @@ function Game(squareSide, cx){
 Game.prototype.start=function(){
 	this.stillSquares=[];//save the squares that are already still on the triangle.
 	this.score=0;
+	this.fallingInterval=1000;
 	this.prepareTriangle();
 	this.prepareTriline();
 	this.giveBlockHint();
@@ -54,25 +55,22 @@ Game.prototype.makeBlockFall=function(block){
 		}
 		block.display();
 		if(onTriangle||hitted){
-			timeout=setTimeout(function(){
+			clearInterval(interval);
+			timeout=setTimeout(function(){//让block停止后不是立即固定，玩家可以让block在这个时间内继续移动，方便填补空缺。
 				block.still=true;
 				for(var k in block.squares){
 				  self.stillSquares.push(block.squares[k]);
 				}
-				self.stillSquares.forEach(function(sS){
-					sS.display();
-				});
-				
 				if(!self.checkIfLose()){
 					self.checkIfShouldClear();
 					self.giveBlockHint();
 					self.newBlock();
 				}
 				clearTimeout(timeout);
-				clearInterval(interval);
-			},1000);
+				// clearInterval(interval);
+			}, 1000);
 		}
-	},1000);
+	},	self.fallingInterval);
 	
 	self.triline.display();
 };
@@ -233,8 +231,10 @@ Game.prototype.checkIfShouldClear=function(){
 					}
 				}
 			}
-			self.score+=10;
+			this.score+=10;
 			self.displayScore();
+			if(this.fallingInterval>200)
+				this.fallingInterval-=20;
 		}
 	}
 };
@@ -261,9 +261,9 @@ Game.prototype.giveBlockHint=function(){
 	this.hintBlock.setSquareCoors();
 	this.hintBlock.display();
 };
-Game.prototype.displayScore=function(){
+Game.prototype.displayScore=function(){	
 	var scoreArea=document.querySelector("#score");
-	scoreArea.innerText=this.score;
+	scoreArea.innerText=this.score;	
 };
 Game.prototype.afterLosing=function(){
 	var loseInterface=document.querySelector("#lose");
