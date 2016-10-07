@@ -15,7 +15,7 @@ Game.prototype.start=function(){
 	this.giveBlockHint();
 	this.onKeyboard();
 	this.displayScore();
-	windows.focus();
+	window.focus();
 };
 Game.prototype.prepareTriangle=function(){
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
