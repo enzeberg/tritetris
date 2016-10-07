@@ -10,8 +10,9 @@ Game.prototype.start=function(){
 	this.fallingInterval=1000;
 	this.prepareTriangle();
 	this.prepareTriline();
-	this.giveBlockHint();
+	this.designNextBlock();
 	this.prepareBlocks();
+	this.giveBlockHint();
 	this.onKeyboard();
 	this.displayScore();
 	document.focus();
@@ -32,20 +33,16 @@ Game.prototype.prepareBlocks=function(){
 	this.makeBlockFall(block);
 };
 Game.prototype.makeBlockFall=function(block){
-	block.still=false;
-	var interval, timeout;
+	// block.still=false;
+	var interval;
 	var step=this.squareSide+this.gap;
 	var self=this;
 	self.fallingBlock=block;
-	var onTriangle=false, hitted=false;
+	var hitted=false;
 	interval=setInterval(function(){
 		var coorRecord=new Vector(block.topleft.x, block.topleft.y);		
 		block.disappear();
 		block.topleft.y+=step;
-		if(block.topleft.y+block.height>-60){
-			block.topleft.y=coorRecord.y;
-			onTriangle=true;
-		}
 		block.setSquareCoors();
 		hitted=self.hitTest(block);
 		if(hitted){
@@ -53,23 +50,22 @@ Game.prototype.makeBlockFall=function(block){
 			block.topleft.y=coorRecord.y;
 			block.setSquareCoors();
 		}
-		block.display();
-		if(onTriangle||hitted){
+		block.display();	
+		if(hitted){
 			clearInterval(interval);
-			timeout=setTimeout(function(){//让block停止后不是立即固定，玩家可以让block在这个时间内继续移动，方便填补空缺。
-				block.still=true;
-				for(var k in block.squares){
-				  self.stillSquares.push(block.squares[k]);
-				}
-				if(!self.checkIfLose()){
-					self.checkIfShouldClear();
-					self.giveBlockHint();
-					self.newBlock();
-				}
-				clearTimeout(timeout);
-				// clearInterval(interval);
-			}, 1000);
+			// block.still=true;
+			for(var k in block.squares){
+			  self.stillSquares.push(block.squares[k]);
+			}
+			if(!self.checkIfLose()){
+				self.checkIfShouldClear();
+				self.newBlock();
+				self.giveBlockHint();
+			}
+			clearTimeout(timeout);
+				
 		}
+					
 	},	self.fallingInterval);
 	
 	self.triline.display();
@@ -95,8 +91,8 @@ Game.prototype.newBlock=function(){
 	this.makeBlockFall(block);
 };
 Game.prototype.makeBlockMove=function(block, direction){
-	if(block.still)
-    	return;
+	/*if(block.still)
+    	return;*/
   	block.disappear();
 	var coorRecord=new Vector(block.topleft.x, block.topleft.y);
 	var step=this.squareSide+this.gap;
@@ -111,12 +107,6 @@ Game.prototype.makeBlockMove=function(block, direction){
 			block.topleft.y+=step;
 			break;
 	}
-	if(block.topleft.x<-100||block.topleft.x+block.width>100){
-		block.topleft.x=coorRecord.x;
-	}
-	if(block.topleft.y+block.height>-60){
-		block.topleft.y=coorRecord.y;
-	}
 	block.setSquareCoors();
 	if(this.hitTest(block)){
 		block.topleft.x=coorRecord.x;
@@ -125,6 +115,7 @@ Game.prototype.makeBlockMove=function(block, direction){
 	}
 	block.display();
 	this.triline.display();
+
 };
 Game.prototype.onKeyboard=function(){
 	var yLimit=-this.triangle.r/2-4;
@@ -185,11 +176,16 @@ Game.prototype.hitTest=function(block, lastCoor){
 				return true;
 			}
 		}
+
 	}
+	if(block.topleft.y+block.height>-60)
+		return true;
+	if(block.topleft.x<-100||block.topleft.x+block.width>100)
+		return true;
 	return false;
 };
 Game.prototype.canRotate=function(f_block){
-	if((!f_block.still)&&f_block.topleft.y>=-this.triline.r2center){
+	if(f_block.topleft.y>=-this.triline.r2center){
 		return false;
 	}
 	return true;
@@ -250,11 +246,14 @@ Game.prototype.checkIfLose=function(){
 		return true;
 	}
 };
-Game.prototype.giveBlockHint=function(){
+Game.prototype.designNextBlock=function(){
 	var blockTypes=["I", "J", "L", "O", "S", "Z", "T"];
-	if(this.hintBlock)
-		this.hintBlock.disappear();
 	this.nextBlockType=blockTypes[Math.floor(Math.random()*7)];
+};
+Game.prototype.giveBlockHint=function(){
+	this.designNextBlock();
+	if(this.hintBlock)
+		this.hintBlock.disappear();	
 	this.hintBlock=new Block(this.nextBlockType, this.squareSide, this.gap, this.cx);
 	this.hintBlock.topleft.x=-this.hintBlock.width/2;
 	this.hintBlock.topleft.y=-30;
