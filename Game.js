@@ -15,7 +15,7 @@ Game.prototype.start=function(){
 	this.giveBlockHint();
 	this.onKeyboard();
 	this.displayScore();
-	document.focus();
+	windows.focus();
 };
 Game.prototype.prepareTriangle=function(){
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
@@ -61,9 +61,7 @@ Game.prototype.makeBlockFall=function(block){
 				self.checkIfShouldClear();
 				self.newBlock();
 				self.giveBlockHint();
-			}
-			clearTimeout(timeout);
-				
+			}		
 		}
 					
 	},	self.fallingInterval);
