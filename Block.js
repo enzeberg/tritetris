@@ -115,5 +115,6 @@ Block.prototype.setSquareCoors=function(){
     this.squares[i].moveApexes();
     maxCol=Math.max(maxCol, col); maxRow=Math.max(maxRow, row);
   }
-  this.width=(maxCol+1)*this.squareSide; this.height=(maxRow+1)*this.squareSide;
+  this.width=(maxCol+1)*this.squareSide+maxCol*this.gap;
+  this.height=(maxRow+1)*this.squareSide+maxRow*this.gap;
 };
