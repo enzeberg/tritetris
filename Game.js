@@ -61,7 +61,8 @@ Game.prototype.makeBlockFall=function(block){
 				self.checkIfShouldClear();
 				self.newBlock();
 				self.giveBlockHint();
-			}		
+			}
+			
 		}
 					
 	},	self.fallingInterval);
@@ -78,6 +79,10 @@ Game.prototype.makeBlockDeform=function(block){
 		}
 	}
 	block.setSquareCoors();
+	if(block.topleft.x+block.width>=100){ //避免有些情况下右侧的方块不能变形
+		block.topleft.x=100-block.width;
+		block.setSquareCoors();
+	}
 	if(this.hitTest(block)){
 		block.pattern=patternRecord;
 		block.setSquareCoors();
@@ -116,7 +121,6 @@ Game.prototype.makeBlockMove=function(block, direction){
 
 };
 Game.prototype.onKeyboard=function(){
-	var yLimit=-this.triangle.r/2-4;
 	var self=this;
 	addEventListener("keyup", function(e){
 		if(self.canRotate(self.fallingBlock)){
