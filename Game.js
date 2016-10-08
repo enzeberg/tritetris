@@ -9,7 +9,7 @@ Game.prototype.start=function(){
 	this.score=0;
 	this.fallingInterval=1000;
 	this.prepareTriangle();
-	this.prepareTriline();
+	this.prepareLine();
 	this.designNextBlock();
 	this.prepareBlocks();
 	this.giveBlockHint();
@@ -23,10 +23,10 @@ Game.prototype.prepareTriangle=function(){
 	this.triangle=new Triangle(Math.PI/2, r, "gray", this.cx);
 	this.triangle.display();
 };
-Game.prototype.prepareTriline=function(){
+Game.prototype.prepareLine=function(){
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
-	this.triline=new Triline(triSide, 142, "gray", this.cx);
-	this.triline.display();
+	this.line=new Line(triSide, 162, "gray", this.cx);
+	this.line.display();
 };
 Game.prototype.prepareBlocks=function(){
 	var block=new Block(this.nextBlockType, this.squareSide, this.gap, cx);
@@ -66,10 +66,9 @@ Game.prototype.makeBlockFall=function(block){
 		}
 					
 	},	self.fallingInterval);
-	
-	self.triline.display();
+	self.line.display();
 };
-Game.prototype.makeBlockDeform=function(block){
+Game.prototype.deformBlock=function(block){
 	block.disappear();
 	var patternRecord=block.pattern;
 	for(var i=0;i<block.patterns.length;i++){
@@ -93,7 +92,7 @@ Game.prototype.newBlock=function(){
 	var block=new Block(this.nextBlockType, this.squareSide, this.gap, cx);
 	this.makeBlockFall(block);
 };
-Game.prototype.makeBlockMove=function(block, direction){
+Game.prototype.moveBlock=function(block, direction){
 	/*if(block.still)
     	return;*/
   	block.disappear();
@@ -117,8 +116,13 @@ Game.prototype.makeBlockMove=function(block, direction){
 		block.setSquareCoors();
 	}
 	block.display();
-	this.triline.display();
-
+	this.line.display();
+};
+Game.prototype.rotate=function(angle){
+	this.triangle.rotate(angle);
+	for(var k in this.stillSquares){
+		this.stillSquares[k].rotate(angle);
+	}
 };
 Game.prototype.onKeyboard=function(){
 	var self=this;
@@ -126,18 +130,10 @@ Game.prototype.onKeyboard=function(){
 		if(self.canRotate(self.fallingBlock)){
 			switch(e.keyCode){
 				case 65:
-					self.triangle.rotate(2*Math.PI/3);
-					self.triline.rotate(2*Math.PI/3);
-					self.stillSquares.forEach(function(square){
-						square.rotate(2*Math.PI/3);
-					});
+					self.rotate(Math.PI*2/3);
 					break;
 				case 68:
-					self.triangle.rotate(-2*Math.PI/3);
-					self.triline.rotate(-2*Math.PI/3);
-					self.stillSquares.forEach(function(square){
-						square.rotate(-2*Math.PI/3);
-					});
+					self.rotate(-Math.PI*2/3);
 					break;
 			}
 		}
@@ -146,19 +142,19 @@ Game.prototype.onKeyboard=function(){
 		switch(e.keyCode){
 		  case 38:
 		    e.preventDefault();
-		    self.makeBlockDeform(self.fallingBlock);
+		    self.deformBlock(self.fallingBlock);
 		    break;
 		  case 37:
 		    e.preventDefault();
-		    self.makeBlockMove(self.fallingBlock, "left");
+		    self.moveBlock(self.fallingBlock, "left");
 		    break;
 		  case 39:
 		    e.preventDefault();
-		    self.makeBlockMove(self.fallingBlock, "right");
+		    self.moveBlock(self.fallingBlock, "right");
 		    break;
 		  case 40:
 		    e.preventDefault();
-		    self.makeBlockMove(self.fallingBlock, "down");
+		    self.moveBlock(self.fallingBlock, "down");
 		    break;
 		}
 	});
@@ -187,13 +183,15 @@ Game.prototype.hitTest=function(block, lastCoor){
 	return false;
 };
 Game.prototype.canRotate=function(f_block){
-	if(f_block.topleft.y>=-this.triline.r2center){
+	if(f_block.topleft.y>=-this.line.r2center){
 		return false;
 	}
 	return true;
 };
 Game.prototype.checkIfShouldClear=function(){
 	var ys=[];
+	var linesClearedNum=0;//消除的行数越多，加的分数越多。
+	var scoreAddition=0;
 	var step=this.squareSide+this.gap;
 	var self=this;
 	for(var i=0; i<this.stillSquares.length; i++){
@@ -229,11 +227,17 @@ Game.prototype.checkIfShouldClear=function(){
 					}
 				}
 			}
-			this.score+=10;
-			self.displayScore();
-			if(this.fallingInterval>200)
-				this.fallingInterval-=20;
+			linesClearedNum++;
+			scoreAddition+=linesClearedNum*10;
+			
+			if(self.fallingInterval>300)
+				self.fallingInterval-=20;
 		}
+	}
+	if(scoreAddition>0){
+		self.displayScoreAddition(scoreAddition);
+		self.score+=scoreAddition;
+		self.displayScore();
 	}
 };
 Game.prototype.checkIfLose=function(){
@@ -261,6 +265,24 @@ Game.prototype.giveBlockHint=function(){
 	this.hintBlock.topleft.y=-30;
 	this.hintBlock.setSquareCoors();
 	this.hintBlock.display();
+};
+Game.prototype.displayScoreAddition=function(addition){
+	var additionEle=document.querySelector("#score_addition");
+	var color;
+	switch(addition){
+		case 10:
+			color="gray"; break;
+		case 30:
+			color="olive"; break;
+		case 60:
+			color="orange"; break;
+		case 100:
+			color="gold"; break;
+	}
+	additionEle.style.color=color;
+	additionEle.innerText="+"+addition;
+	$(additionEle).show();
+	$(additionEle).hide(2000);
 };
 Game.prototype.displayScore=function(){	
 	var scoreArea=document.querySelector("#score");

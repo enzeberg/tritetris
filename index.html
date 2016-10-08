@@ -4,10 +4,12 @@
 	<title>Tritetris</title>
 	<link rel="shortcut icon" href="https://enzeberg.github.io/tritetris/favicon.ico">
 	<link rel="stylesheet" href="Tritetris.css" type="text/css">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <body>
 <canvas width="1340" height="600" style="background-color: white"></canvas>
 <div id="head">Tritetris</div>
+<div id="score_addition"></div>
 <div id="score"></div>
 <div id="lose">
 	<p>Oops, you lose!</p>
@@ -27,7 +29,8 @@
 <script src="Vector.js"></script>
 <script src="library.js"></script>
 <script src="Triangle.js"></script>
-<script src="Triline.js"></script>
+<!-- <script src="Triline.js"></script> -->
+<script src="Line.js"></script>
 <script src="Square.js"></script>
 <script src="Block.js"></script>
 <script src="Game.js"></script>
@@ -43,7 +46,7 @@
 		cx.clearRect(-cv.width/2, -cv.height/2, cv.width, cv.height);
 		document.querySelector("#lose").style.display="none";
 		game0.stillSquares.forEach(function(sS){
-			sS.thetas=null;
+			sS.thetas.length=null;
 		});
 		game0.stillSquares=null;
 		game0.fallingBlock=null;
