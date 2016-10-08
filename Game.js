@@ -235,7 +235,7 @@ Game.prototype.checkIfShouldClear=function(){
 		}
 	}
 	if(scoreAddition>0){
-		//self.displayScoreAddition(scoreAddition);
+		self.displayScoreAddition(scoreAddition);
 		self.score+=scoreAddition;
 		self.displayScore();
 	}
