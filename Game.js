@@ -230,7 +230,7 @@ Game.prototype.checkIfShouldClear=function(){
 			linesClearedNum++;
 			scoreAddition+=linesClearedNum*10;
 			
-			if(self.fallingInterval>300)
+			if(self.fallingInterval>400)
 				self.fallingInterval-=20;
 		}
 	}
