@@ -9,7 +9,7 @@ Game.prototype.start=function(){
 	this.score=0;
 	this.fallingInterval=1000;
 	this.prepareTriangle();
-	this.prepareLine();
+	//this.prepareLine();
 	this.designNextBlock();
 	this.prepareBlocks();
 	this.giveBlockHint();
@@ -66,7 +66,7 @@ Game.prototype.makeBlockFall=function(block){
 		}
 					
 	},	self.fallingInterval);
-	self.line.display();
+	//self.line.display();
 };
 Game.prototype.deformBlock=function(block){
 	block.disappear();
@@ -116,18 +116,52 @@ Game.prototype.moveBlock=function(block, direction){
 		block.setSquareCoors();
 	}
 	block.display();
-	this.line.display();
+	//this.line.display();
+};
+Game.prototype.rotateSquare=function(s_square, angle){
+	var step;
+	var absAng1=0.08, absAng2;
+	var anglePassed=0;
+	var requestID;
+	var self=this;
+	function animate(){
+		s_square.disappear(); 
+		absAng2=Math.abs(angle-anglePassed);
+		step=angle>0?Math.min(absAng1,absAng2):-Math.min(absAng1,absAng2);
+		for(var i=0;i<4;i++){
+		  s_square.thetas[i]+=step;
+		}
+		s_square.rotateApexes();
+		s_square.display();
+		anglePassed+=step;
+		if(anglePassed==angle){
+		  	cancelAnimationFrame(requestID);
+			if(self.hitTest(self.fallingBlock)){
+				self.fallingBlock.disappear();
+				self.fallingBlock.topleft.y-=(self.fallingBlock.height+self.gap);
+				self.fallingBlock.setSquareCoors();
+				self.fallingBlock.display();
+				self.stillSquares.forEach(function(s_s){
+					s_s.display();//fallingBlock上移会造成有些still square被擦除。
+				})
+			}
+		}else{
+		  	requestID=requestAnimationFrame(animate);
+		}
+	}
+	requestID=requestAnimationFrame(animate);
 };
 Game.prototype.rotate=function(angle){
 	this.triangle.rotate(angle);
 	for(var k in this.stillSquares){
-		this.stillSquares[k].rotate(angle);
+		//this.stillSquares[k].rotate(angle);
+		this.rotateSquare(this.stillSquares[k], angle);
 	}
 };
 Game.prototype.onKeyboard=function(){
 	var self=this;
 	addEventListener("keyup", function(e){
-		if(self.canRotate(self.fallingBlock)){
+		//if(self.canRotate(self.fallingBlock)){
 			switch(e.keyCode){
 				case 65:
 					self.rotate(Math.PI*2/3);
@@ -136,7 +170,7 @@ Game.prototype.onKeyboard=function(){
 					self.rotate(-Math.PI*2/3);
 					break;
 			}
-		}
+		//}
 	});
 	addEventListener("keydown",function(e){
 		switch(e.keyCode){
@@ -182,12 +216,12 @@ Game.prototype.hitTest=function(block, lastCoor){
 		return true;
 	return false;
 };
-Game.prototype.canRotate=function(f_block){
+/*Game.prototype.canRotate=function(f_block){
 	if(f_block.topleft.y>=-this.line.r2center){
 		return false;
 	}
 	return true;
-};
+};*/
 Game.prototype.checkIfShouldClear=function(){
 	var ys=[];
 	var linesClearedNum=0;//消除的行数越多，加的分数越多。
