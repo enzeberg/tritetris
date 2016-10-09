@@ -141,9 +141,6 @@ Game.prototype.rotateSquare=function(s_square, angle){
 				self.fallingBlock.topleft.y-=(self.fallingBlock.height+self.gap);
 				self.fallingBlock.setSquareCoors();
 				self.fallingBlock.display();
-				self.stillSquares.forEach(function(s_s){
-					s_s.display();//fallingBlock上移会造成有些still square被擦除。
-				})
 			}
 		}else{
 		  	requestID=requestAnimationFrame(animate);
@@ -157,6 +154,9 @@ Game.prototype.rotate=function(angle){
 		//this.stillSquares[k].rotate(angle);
 		this.rotateSquare(this.stillSquares[k], angle);
 	}
+	this.stillSquares.forEach(function(s_s){
+		s_s.display();
+	});
 };
 Game.prototype.onKeyboard=function(){
 	var self=this;
