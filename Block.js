@@ -63,7 +63,7 @@ function Block(shape,squareSide,gap,cx){
   }
   this.patterns.push(pattern1,pattern2,pattern3,pattern4);
   this.pattern=this.patterns[0];
-  this.topleft=new Vector(-this.squareSide, -cvHeight/2-40);
+  this.topleft=new Vector(-this.squareSide, -cvHeight/2);
   var maxCol=this.pattern[0], maxRow=this.pattern[1];
   for(var i=0;i<4;i++){
     col=this.pattern[2*i]; row=this.pattern[2*i+1];
