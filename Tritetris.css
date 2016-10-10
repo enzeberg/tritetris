@@ -16,14 +16,22 @@ body{
   font-size: 32pt;
   text-align: center;
 }
-#score{
-  width: 100px;
+#score, #best{
+  
   text-align: center;
   color: gray;
   font-size: 30pt;
   position: absolute;
+  }
+#score{
+  width: 100px;
   top: 435px;
   left: 628px;
+}
+#best{
+  width: 220px;
+  top: 480px;
+  left: 570px;
 }
 #lose{
   display: none;

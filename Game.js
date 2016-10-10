@@ -7,6 +7,10 @@ function Game(squareSide, cx){
 Game.prototype.start=function(){
 	this.stillSquares=[];//save the squares that are already still on the triangle.
 	this.score=0;
+	this.displayScore();
+	this.initBestStorage();
+	this.bestScore=localStorage.getItem("t_best")||0;
+	this.displayBest();
 	this.fallingInterval=1000;
 	this.prepareTriangle();
 	this.prepareLine();
@@ -14,7 +18,7 @@ Game.prototype.start=function(){
 	this.prepareBlocks();
 	this.giveBlockHint();
 	this.onKeyboard();
-	this.displayScore();
+	
 	window.focus();
 };
 Game.prototype.prepareTriangle=function(){
@@ -275,7 +279,10 @@ Game.prototype.checkIfShouldClear=function(){
 		self.displayScoreAddition(scoreAddition);
 		self.score+=scoreAddition;
 		self.displayScore();
+		self.handleBestStorage();
+		self.displayBest();
 	}
+
 };
 Game.prototype.checkIfLose=function(){
 	var minStillY=-80;
@@ -324,6 +331,24 @@ Game.prototype.displayScoreAddition=function(addition){
 Game.prototype.displayScore=function(){	
 	var scoreArea=document.querySelector("#score");
 	scoreArea.innerText=this.score;	
+};
+Game.prototype.initBestStorage=function(){
+	if(window.localStorage){
+		if(localStorage.getItem("t_best")==null)
+			localStorage.setItem("t_best", 0);
+	}
+};
+Game.prototype.handleBestStorage=function(){
+	if(localStorage.getItem("t_best")){
+		if(this.score>parseInt(localStorage.getItem("t_best"))){
+			localStorage.setItem("t_best", this.score);
+		}
+	}
+	this.bestScore=localStorage.getItem("t_best");
+}
+Game.prototype.displayBest=function(){
+	var bestArea=document.querySelector("#best");
+	bestArea.innerText="BEST: "+ this.bestScore;
 };
 Game.prototype.afterLosing=function(){
 	var loseInterface=document.querySelector("#lose");
