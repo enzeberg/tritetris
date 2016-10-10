@@ -9,7 +9,7 @@ Game.prototype.start=function(){
 	this.score=0;
 	this.fallingInterval=1000;
 	this.prepareTriangle();
-	//this.prepareLine();
+	this.prepareLine();
 	this.designNextBlock();
 	this.prepareBlocks();
 	this.giveBlockHint();
@@ -66,7 +66,7 @@ Game.prototype.makeBlockFall=function(block){
 		}
 					
 	},	self.fallingInterval);
-	//self.line.display();
+	self.line.display();
 };
 Game.prototype.deformBlock=function(block){
 	block.disappear();
@@ -116,7 +116,7 @@ Game.prototype.moveBlock=function(block, direction){
 		block.setSquareCoors();
 	}
 	block.display();
-	//this.line.display();
+	this.line.display();
 };
 Game.prototype.rotateSquare=function(s_square, angle){
 	var step;
@@ -161,7 +161,7 @@ Game.prototype.rotate=function(angle){
 Game.prototype.onKeyboard=function(){
 	var self=this;
 	addEventListener("keyup", function(e){
-		//if(self.canRotate(self.fallingBlock)){
+		if(self.canRotate(self.fallingBlock)){
 			switch(e.keyCode){
 				case 65:
 					self.rotate(Math.PI*2/3);
@@ -170,7 +170,7 @@ Game.prototype.onKeyboard=function(){
 					self.rotate(-Math.PI*2/3);
 					break;
 			}
-		//}
+		}
 	});
 	addEventListener("keydown",function(e){
 		switch(e.keyCode){
@@ -216,12 +216,12 @@ Game.prototype.hitTest=function(block, lastCoor){
 		return true;
 	return false;
 };
-/*Game.prototype.canRotate=function(f_block){
+Game.prototype.canRotate=function(f_block){
 	if(f_block.topleft.y>=-this.line.r2center){
 		return false;
 	}
 	return true;
-};*/
+};
 Game.prototype.checkIfShouldClear=function(){
 	var ys=[];
 	var linesClearedNum=0;//消除的行数越多，加的分数越多。
