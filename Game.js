@@ -141,6 +141,9 @@ Game.prototype.rotateSquare=function(s_square, angle){
 				self.fallingBlock.topleft.y-=(self.fallingBlock.height+self.gap);
 				self.fallingBlock.setSquareCoors();
 				self.fallingBlock.display();
+				for(var k in self.stillSquares){
+					self.stillSquares[k].display();
+				}
 			}
 		}else{
 		  	requestID=requestAnimationFrame(animate);
