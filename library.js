@@ -25,3 +25,8 @@ function minFromAry(array){
 	}
 	return min;
 }
+function areSimilar(val1, val2){
+	var difference=Math.abs(val1-val2);
+	if(difference<0.1)
+		return true;
+}

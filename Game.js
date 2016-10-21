@@ -11,7 +11,7 @@ Game.prototype.start=function(){
 	this.initBestStorage();
 	this.bestScore=localStorage.getItem("t_best")||0;
 	this.displayBest();
-	this.fallingInterval=1000;
+	this.fallingInterval=1000; 
 	this.prepareTriangle();
 	this.prepareLine();
 	this.designNextBlock();
@@ -38,6 +38,7 @@ Game.prototype.prepareBlocks=function(){
 };
 Game.prototype.makeBlockFall=function(block){
 	// block.still=false;
+	// console.log(this.stillSquares.length);
 	var interval;
 	var step=this.squareSide+this.gap;
 	var self=this;
@@ -238,29 +239,29 @@ Game.prototype.checkIfShouldClear=function(){
 	for(var i=0; i<this.stillSquares.length; i++){
 		ys.push(this.stillSquares[i].topleft.y);
 	}
-	var squaresAtSameY=[];
 	for(var y=minFromAry(ys); y<-60; y+=step){
-		squaresAtSameY.length=0;
+		var numAtSameY=0;
 		for(var k in this.stillSquares){
-			var difference=Math.abs(y-this.stillSquares[k].topleft.y);
-			if(difference<0.1){
-				squaresAtSameY.push(this.stillSquares[k]);
-			}
+			if(areSimilar(y, this.stillSquares[k].topleft.y))
+				numAtSameY++;
 		}
-		if(squaresAtSameY.length==10){
-			squaresAtSameY.forEach(function(s){
+		if(numAtSameY==10){
+			var numOfDeleted=0;
+			while(numOfDeleted<10){
 				for(var i=0; i<self.stillSquares.length; i++){
-					var stillSquare=self.stillSquares[i];					
-					if(stillSquare.topleft.x==s.topleft.x&&stillSquare.topleft.y==s.topleft.y){
+					if(numOfDeleted>=10) break;
+					var stillSquare=self.stillSquares[i];
+					if(areSimilar(stillSquare.topleft.y, y)){
 						stillSquare.disappear();
 						self.stillSquares.splice(i, 1);
+						numOfDeleted++;
 					}
 				}
-			});	
-			for(var yy=y-step; yy>=minFromAry(ys); yy-=step){
+			}
+			// console.log("numOfDeleted: ", numOfDeleted);
+			for(var yy=y-step; yy>=minFromAry(ys); yy-=step){//因为下降会用到disappear方法，所以需要逐层下降
 				for(var i=0; i<self.stillSquares.length; i++){
-					var difference=Math.abs(yy-self.stillSquares[i].topleft.y);
-					if(difference<0.1){
+					if(areSimilar(yy, self.stillSquares[i].topleft.y)){
 						self.stillSquares[i].disappear();
 						self.stillSquares[i].topleft.y+=step;
 						self.stillSquares[i].moveApexes();
