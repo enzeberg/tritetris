@@ -1,5 +1,16 @@
+html, body{
+  margin: 0;
+  padding: 0;
+  overflow-x:hidden;
+}
 body{
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+}
+canvas{
+  width: 60%;
+  height: 88%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 #head{
   position: absolute;
@@ -8,65 +19,78 @@ body{
   color: gray;
   font-size: 30pt;
 }
-#score_addition{
+
+
+
+.about_score{
   position: absolute;
-  top: 280px;
-  left: 625px;
-  width: 100px;
-  font-size: 32pt;
+  top: 78%;
+  left: 44%;
   text-align: center;
+  width: 12%;
+
+}
+.about_score .score_and_best{
+  width: 100%;
+  background: #f7b61f;
+  border-radius: 3%;
+}
+#score_addition{ 
+  font-size: 32pt;
 }
 #score, #best{
-  
-  text-align: center;
   color: gray;
-  font-size: 30pt;
-  position: absolute;
-  }
+}
 #score{
-  width: 100px;
-  top: 435px;
-  left: 628px;
+  font-size: 30pt;
 }
 #best{
-  width: 220px;
-  top: 480px;
-  left: 570px;
+  font-size: 15pt;
 }
+
+
 #lose{
   display: none;
   text-align: center;
   font-size:20pt;
   color:white;
   word-wrap:normal;
-  width:340px;
-  height:300px;
-  padding:30px;
+  width: 25%;
+  height: 40%;
   position:absolute;
-  top:140px;
-  left:480px;
+  top:30%;
+  left:37.5%;
   background-color:rgba(200,180,150,0.5);
 }
 #lose #enjoy_again{
   background-color: rgba(180,180,200,0.8);
-  line-height: 50px; 
+  /*font-size: xx-large;*/
   height: 50px;
+  line-height: 50px;
   cursor: pointer;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 #lose #enjoy_again:hover{
-
   background-color: rgb(180,180,200);
 }
-#introduction, #about{
+
+
+
+#introduction{
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
   color:gray;
   font-size:18pt;
+  /*background: blue;*/
 }
-#introduction p{
-  width: 400px;
-  position: relative;
-  left: 480px;
-}
-#about{
+/#introduction *{
   width: 100%;
+}
+
+#about{
+
   text-align: center;
 }

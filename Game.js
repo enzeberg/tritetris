@@ -29,7 +29,8 @@ Game.prototype.prepareTriangle=function(){
 };
 Game.prototype.prepareLine=function(){
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
-	this.line=new Line(triSide, 162, "gray", this.cx);
+	var r2center=triSide/(Math.sqrt(3)*2)+5*this.squareSide+4*this.gap+10.2;
+	this.line=new Line(triSide, r2center, "gray", this.cx);
 	this.line.display();
 };
 Game.prototype.prepareBlocks=function(){
@@ -218,8 +219,13 @@ Game.prototype.hitTest=function(block, lastCoor){
 		}
 
 	}
-	if(block.topleft.y+block.height>-60)
+	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
+	var yLimit=-triSide/(2*Math.sqrt(3))-3;
+	console.log(yLimit);
+	if(block.topleft.y+block.height>yLimit){
+		console.log('block.topleft.y+block.height', block.topleft.y+block.height);
 		return true;
+	}
 	if(block.topleft.x<-100||block.topleft.x+block.width>100)
 		return true;
 	return false;

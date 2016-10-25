@@ -7,25 +7,18 @@
 	
 </head>
 <body>
-<canvas width="1340" height="600" style="background-color: white"></canvas>
+<canvas   style="background-color: white"></canvas>
 <div id="head">Tritetris</div>
-<div id="score_addition"></div>
-<div id="score"></div>
-<div id="best"></div>
+
 <div id="lose">
 	<p>Oops, you lose!</p>
 	<div id="enjoy_again">Enjoy Again</div>
 </div>
-<div id="introduction">
-	<p><strong>HOW TO PLAY: </strong>Use the four arrow keys to move or deform the falling tetromino and key A or D to rotate the triangle.
-	</p>
-	<p><strong>NOTE: </strong>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle, 
-	and when the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to 
-	avoid covering the still squares.
-	</p>
-	<p>Now this game is only for your computer!	Perhaps we can play it on a mobile device in the future.</p>
-	<div id="about">
-		<p>a Li Enze game</p>
+<div class="about_score">
+	<div id="score_addition"></div>
+	<div class="score_and_best">
+		<div id="score"></div>
+		<div id="best"></div>
 	</div>
 </div>
 <script src="jquery-3.1.1.min.js"></script>
@@ -37,11 +30,16 @@
 <script src="Block.js"></script>
 <script src="Game.js"></script>
 <script>
-	
+	var screenWidth=screen.width;
+	var screenHeight=screen.height;
 	var cv=document.querySelector("canvas");
+	cv.width=screenWidth*0.6;
+	cv.height=screenHeight*0.88;
+	var squareSide=Math.floor(0.012*screenWidth);
+
 	var cx=cv.getContext("2d");
 	cx.translate(cv.width/2, cv.height/2);
-	var game0=new Game(16, cx);
+	var game0=new Game(squareSide, cx);
 	game0.start();
 	var enjoyAgain=document.querySelector("#enjoy_again");
 	enjoyAgain.addEventListener("click", function(){
@@ -56,5 +54,18 @@
 		game0.start();
 	});
 </script>
+
+<div id="introduction">
+	<p><strong>HOW TO PLAY: </strong>Use the four arrow keys to move or deform the falling tetromino and key A or D to rotate the triangle.
+	</p>
+	<p><strong>NOTE: </strong>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle, 
+	and when the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to 
+	avoid covering the still squares.
+	</p>
+	<p>Now this game is only for your computer!	Perhaps we can play it on a mobile device in the future.</p>
+	<div id="about">
+		<p>a Li Enze game</p>
+	</div>
+</div>
 </body>
 </html>
