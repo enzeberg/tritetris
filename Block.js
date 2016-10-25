@@ -66,7 +66,7 @@ function Block(shape,squareSide,gap,cx){
   //this.topleft=new Vector(-this.squareSide, -cvHeight/2);
   var triSide=this.squareSide*10+this.gap*11;
   var startY=-10*this.squareSide-9*this.gap-triSide-3;
-  console.log('startY', startY);
+  //console.log('startY', startY);
   this.topleft=new Vector(-this.squareSide, startY);
   var maxCol=this.pattern[0], maxRow=this.pattern[1];
   for(var i=0;i<4;i++){
