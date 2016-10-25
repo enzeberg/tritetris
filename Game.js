@@ -221,12 +221,12 @@ Game.prototype.hitTest=function(block, lastCoor){
 	}
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
 	var yLimit=-triSide/(2*Math.sqrt(3))-3;
-	console.log(yLimit);
+	// console.log(yLimit);
 	if(block.topleft.y+block.height>yLimit){
-		console.log('block.topleft.y+block.height', block.topleft.y+block.height);
+		// console.log('block.topleft.y+block.height', block.topleft.y+block.height);
 		return true;
 	}
-	if(block.topleft.x<-100||block.topleft.x+block.width>100)
+	if(block.topleft.x<-triSide/2||block.topleft.x+block.width>triSide/2)
 		return true;
 	return false;
 };
