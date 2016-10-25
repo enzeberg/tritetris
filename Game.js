@@ -292,7 +292,9 @@ Game.prototype.checkIfShouldClear=function(){
 
 };
 Game.prototype.checkIfLose=function(){
-	var minStillY=-80;
+	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
+	var minStillY=-triSide/(Math.sqrt(3)*2)-10*this.squareSide+4*this.gap;
+	// console.log(minStillY);
 	for(var k in this.stillSquares){
 		minStillY=this.stillSquares[k].topleft.y<minStillY?
 					this.stillSquares[k].topleft.y:
