@@ -230,6 +230,9 @@ Game.prototype.onTouchScreen=function(){
 		}
 		
 	});
+	canvas.addEventListener('touchend', function(e){
+		startTouch=null;
+	});
 	var shunBtn=document.querySelector('#shun');
 	var niBtn=document.querySelector('#ni');
 	shunBtn.addEventListener('touchstart', function(e){

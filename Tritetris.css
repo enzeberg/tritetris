@@ -30,19 +30,20 @@ canvas{
   
 }
 .rotate_buttons *{
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   background: #f7b61f;
   border-radius: 2px;
   margin: 50px;
+  text-align: center;
 }
 .rotate_buttons * span{
   color: white;
   font-size: 25pt;
-  text-align: center;
+  
   position: relative;
   top: 35%;
-  left: 35%;
+
 }
 
 
