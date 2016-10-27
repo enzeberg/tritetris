@@ -18,6 +18,7 @@ Game.prototype.start=function(){
 	this.prepareBlocks();
 	this.giveBlockHint();
 	this.onKeyboard();
+	this.onTouchScreen();
 	
 	window.focus();
 };
@@ -202,6 +203,33 @@ Game.prototype.onKeyboard=function(){
 		}
 	});
 
+};
+Game.prototype.onTouchScreen=function(){
+	var self=this;
+	var touchsurface=self.cx.canvas;
+	var startTouch;
+	touchsurface.addEventListener('touchstart', function(e){
+		e.preventDefault();
+		startTouch=e.changedTouches[0];
+	});
+	touchsurface.addEventListener('touchmove', function(e){
+		var currentTouch=e.changedTouches[0];
+		var touchType=judgeTouchType(startTouch, currentTouch);
+		if(touchType=='up'){
+			self.deformBlock(self.fallingBlock);
+			startTouch=currentTouch;
+		}else if(touchType=='left'){
+			self.moveBlock(self.fallingBlock, 'left');
+			startTouch=currentTouch;
+		}else if(touchType=='right'){
+			self.moveBlock(self.fallingBlock, 'right');
+			startTouch=currentTouch;
+		}else if(touchType=='down'){
+			self.moveBlock(self.fallingBlock, 'down');
+			startTouch=currentTouch;
+		}
+		
+	});
 };
 Game.prototype.hitTest=function(block, lastCoor){
 	var distance;
