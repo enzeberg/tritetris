@@ -33,7 +33,7 @@ canvas{
   width: 150px;
   height: 150px;
   background: #f7b61f;
-  border-radius: 2px;
+  border-radius: 5px;
   margin-bottom: 50px;
   text-align: center;
 }
@@ -59,7 +59,7 @@ canvas{
 .about_score .score_and_best{
   width: 100%;
   background: #f7b61f;
-  border-radius: 3%;
+  border-radius: 5px;
 }
 #score_addition{ 
   font-size: 32pt;

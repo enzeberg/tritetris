@@ -210,6 +210,7 @@ Game.prototype.onTouchScreen=function(){
 	var startTouch;
 	var deformDiv=document.querySelector('.deform');
 	deformDiv.addEventListener('touchstart', function(e){
+		e.preventDefault();
 		self.deformBlock(self.fallingBlock);
 	})
 	canvas.addEventListener('touchstart', function(e){

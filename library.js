@@ -38,8 +38,7 @@ function judgeTouchType(lastTouch, currentTouch, threshold){
 	var yDifference=currentY-lastY;
 	var absDX=Math.abs(xDifference);
 	var absDY=Math.abs(yDifference);
-	console.log(xDifference, yDifference);
-	if(yDifference<-4*threshold&&absDX<0.5*threshold){
+	if(yDifference<-2*threshold&&absDX<0.5*threshold){
 		return 'up';
 	}
 	if(xDifference<-threshold&&absDY<0.5*threshold){
