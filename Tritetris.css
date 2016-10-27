@@ -88,7 +88,7 @@ canvas{
   background-color:rgba(200,180,150,0.5);
 }
 #lose #enjoy_again{
-  background-color: rgba(180,180,200,0.8);
+  background-color: #f7b61f;
   /*font-size: xx-large;*/
   height: 50px;
   line-height: 50px;
@@ -97,9 +97,7 @@ canvas{
   margin-left: 15%;
   margin-right: 15%;
 }
-#lose #enjoy_again:hover{
-  background-color: rgb(180,180,200);
-}
+
 
 
 
