@@ -21,6 +21,31 @@ canvas{
 }
 
 
+.rotate_buttons{
+ /* width: 10%;
+  height: 20%;*/
+  position: absolute;
+  left: 10%;
+  top: 20%;
+  
+}
+.rotate_buttons *{
+  width: 100px;
+  height: 100px;
+  background: #f7b61f;
+  border-radius: 2px;
+  margin: 5px;
+}
+.rotate_buttons * span{
+  color: white;
+  font-size: 25pt;
+  text-align: center;
+  position: relative;
+  top: 35%;
+  left: 35%;
+}
+
+
 
 .about_score{
   position: absolute;

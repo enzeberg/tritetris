@@ -31,22 +31,22 @@ function areSimilar(val1, val2){
 		return true;
 }
 
-function judgeTouchType(lastTouch, currentTouch){
+function judgeTouchType(lastTouch, currentTouch, threshold){
 	var lastX=lastTouch.clientX, lastY=lastTouch.clientY;
 	var currentX=currentTouch.clientX, currentY=currentTouch.clientY;
 	var xDifference=currentX-lastX;
 	var yDifference=currentY-lastY;
 	console.log(xDifference, yDifference);
-	if(yDifference<-200&&yDifference<xDifference){
+	if(yDifference<-threshold&&yDifference<xDifference){
 		return 'up';
 	}
-	if(xDifference<-200&&xDifference<yDifference){
+	if(xDifference<-threshold&&xDifference<yDifference){
 		return 'left';
 	}
-	if(xDifference>200&&xDifference>yDifference){
+	if(xDifference>threshold&&xDifference>yDifference){
 		return 'right';
 	}
-	if(yDifference>200&&yDifference>xDifference){
+	if(yDifference>threshold&&yDifference>xDifference){
 		return 'down';
 	}
 	return null;

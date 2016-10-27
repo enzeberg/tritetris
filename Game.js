@@ -206,15 +206,15 @@ Game.prototype.onKeyboard=function(){
 };
 Game.prototype.onTouchScreen=function(){
 	var self=this;
-	var touchsurface=self.cx.canvas;
+	var canvas=self.cx.canvas;
 	var startTouch;
-	touchsurface.addEventListener('touchstart', function(e){
+	canvas.addEventListener('touchstart', function(e){
 		e.preventDefault();
 		startTouch=e.changedTouches[0];
 	});
-	touchsurface.addEventListener('touchmove', function(e){
+	canvas.addEventListener('touchmove', function(e){
 		var currentTouch=e.changedTouches[0];
-		var touchType=judgeTouchType(startTouch, currentTouch);
+		var touchType=judgeTouchType(startTouch, currentTouch, self.squareSide);
 		if(touchType=='up'){
 			self.deformBlock(self.fallingBlock);
 			startTouch=currentTouch;
@@ -230,6 +230,20 @@ Game.prototype.onTouchScreen=function(){
 		}
 		
 	});
+	var shunBtn=document.querySelector('#shun');
+	var niBtn=document.querySelector('#ni');
+	shunBtn.addEventListener('touchstart', function(e){
+		e.preventDefault();
+		if(self.canRotate(self.fallingBlock)){
+			self.rotate(Math.PI*2/3);
+		}
+	});
+	niBtn.addEventListener('touchstart', function(e){
+		e.preventDefault();
+		if(self.canRotate(self.fallingBlock)){
+			self.rotate(-Math.PI*2/3);
+		}
+	})
 };
 Game.prototype.hitTest=function(block, lastCoor){
 	var distance;
@@ -273,7 +287,8 @@ Game.prototype.checkIfShouldClear=function(){
 	for(var i=0; i<this.stillSquares.length; i++){
 		ys.push(this.stillSquares[i].topleft.y);
 	}
-	for(var y=minFromAry(ys); y<-60; y+=step){
+	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
+	for(var y=minFromAry(ys); y<-triSide/(Math.sqrt(3)*2); y+=step){
 		var numAtSameY=0;
 		for(var k in this.stillSquares){
 			if(areSimilar(y, this.stillSquares[k].topleft.y))
@@ -344,7 +359,7 @@ Game.prototype.giveBlockHint=function(){
 		this.hintBlock.disappear();	
 	this.hintBlock=new Block(this.nextBlockType, this.squareSide, this.gap, this.cx);
 	this.hintBlock.topleft.x=-this.hintBlock.width/2;
-	this.hintBlock.topleft.y=-30;
+	this.hintBlock.topleft.y=-this.squareSide*2;
 	this.hintBlock.setSquareCoors();
 	this.hintBlock.display();
 };
