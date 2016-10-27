@@ -36,17 +36,19 @@ function judgeTouchType(lastTouch, currentTouch, threshold){
 	var currentX=currentTouch.clientX, currentY=currentTouch.clientY;
 	var xDifference=currentX-lastX;
 	var yDifference=currentY-lastY;
+	var absDX=Math.abs(xDifference);
+	var absDY=Math.abs(yDifference);
 	console.log(xDifference, yDifference);
-	if(yDifference<-threshold&&yDifference<xDifference){
+	if(yDifference<-threshold&&absDX<0.5*threshold){
 		return 'up';
 	}
-	if(xDifference<-threshold&&xDifference<yDifference){
+	if(xDifference<-threshold&&absDY<0.5*threshold){
 		return 'left';
 	}
-	if(xDifference>threshold&&xDifference>yDifference){
+	if(xDifference>threshold&&absDY<0.5*threshold){
 		return 'right';
 	}
-	if(yDifference>threshold&&yDifference>xDifference){
+	if(yDifference>threshold&&absDX<0.5*threshold){
 		return 'down';
 	}
 	return null;

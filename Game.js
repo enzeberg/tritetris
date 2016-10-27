@@ -214,7 +214,7 @@ Game.prototype.onTouchScreen=function(){
 	});
 	canvas.addEventListener('touchmove', function(e){
 		var currentTouch=e.changedTouches[0];
-		var touchType=judgeTouchType(startTouch, currentTouch, self.squareSide);
+		var touchType=judgeTouchType(startTouch, currentTouch, self.squareSide*2);
 		if(touchType=='up'){
 			self.deformBlock(self.fallingBlock);
 			startTouch=currentTouch;

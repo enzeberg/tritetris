@@ -25,16 +25,16 @@ canvas{
  /* width: 10%;
   height: 20%;*/
   position: absolute;
-  left: 10%;
+  left: 3%;
   top: 20%;
   
 }
 .rotate_buttons *{
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   background: #f7b61f;
   border-radius: 2px;
-  margin: 5px;
+  margin: 50px;
 }
 .rotate_buttons * span{
   color: white;
