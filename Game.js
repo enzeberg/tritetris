@@ -293,14 +293,15 @@ Game.prototype.checkIfShouldClear=function(){
 };
 Game.prototype.checkIfLose=function(){
 	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
-	var minStillY=-triSide/(Math.sqrt(3)*2)-10*this.squareSide+4*this.gap;
-	// console.log(minStillY);
+	var loseEdge=-triSide/(Math.sqrt(3)*2)-10*this.squareSide-9*this.gap;
+	var minStillY=0;
 	for(var k in this.stillSquares){
 		minStillY=this.stillSquares[k].topleft.y<minStillY?
 					this.stillSquares[k].topleft.y:
 					minStillY;
 	}
-	if(minStillY<-(this.cx.canvas.height/2-this.squareSide)){
+
+	if(minStillY<loseEdge){
 		this.afterLosing();
 		return true;
 	}
