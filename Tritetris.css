@@ -22,16 +22,15 @@ canvas{
 
 
 .three_buttons{
- /* width: 10%;
-  height: 20%;*/
+  width: 10%;
   position: absolute;
-  left: 3%;
-  top: 10%;
+  left: 12%;
+  top: 30%;
   
 }
 .three_buttons *{
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  /*height: 150px;*/
   background: #f7b61f;
   border-radius: 5px;
   margin-bottom: 50px;
