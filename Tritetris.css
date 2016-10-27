@@ -21,23 +21,23 @@ canvas{
 }
 
 
-.rotate_buttons{
+.three_buttons{
  /* width: 10%;
   height: 20%;*/
   position: absolute;
   left: 3%;
-  top: 20%;
+  top: 10%;
   
 }
-.rotate_buttons *{
+.three_buttons *{
   width: 150px;
   height: 150px;
   background: #f7b61f;
   border-radius: 2px;
-  margin: 50px;
+  margin-bottom: 50px;
   text-align: center;
 }
-.rotate_buttons * span{
+.three_buttons * span{
   color: white;
   font-size: 25pt;
   
