@@ -9,8 +9,8 @@ body{
 canvas{
   width: 60%;
   height: 88%;
-  margin-left: 20%;
-  margin-right: 20%;
+ /* margin-left: 20%;
+  margin-right: 20%;*/
 }
 #head{
   position: absolute;
@@ -21,28 +21,39 @@ canvas{
 }
 
 
-.three_buttons{
-  width: 10%;
-  position: absolute;
-  left: 4%;
-  top: 30%;
+.left_area, canvas, .right_area{
+  float: left;
   
 }
-.three_buttons *{
-  width: 100%;
-  /*height: 150px;*/
-  background: #f7b61f;
-  border-radius: 5px;
-  margin-bottom: 50px;
-  text-align: center;
-}
-.three_buttons * span{
-  color: white;
-  font-size: 25pt;
-  
-  position: relative;
-  top: 35%;
 
+.left_area, .right_area{
+  width: 20%;
+  padding-top: 15%;
+  /*background: purple;*/
+  color: white;
+  font-size: 1.5em;
+}
+.left_area *{
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 30%;
+  background: #f7b61f;
+  text-align: center;
+  border-radius: 3px;
+}
+.right_area *{
+
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 30%;
+  background: #f7b61f;
+  text-align: center;
+  border-radius: 3px;
+}
+.pause{
+  cursor: pointer;
 }
 
 
@@ -90,7 +101,6 @@ canvas{
 #lose #enjoy_again{
   background-color: #f7b61f;
   /*font-size: xx-large;*/
-  height: 50px;
   line-height: 50px;
   cursor: pointer;
   width: 70%;
