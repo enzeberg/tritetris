@@ -183,7 +183,8 @@ Game.prototype.rotate=function(angle){
 };
 Game.prototype.onKeyboard=function(){
 	var self=this;
-	addEventListener("keyup", function(e){
+	// addEventListener("keyup", function(e){
+	$(window).bind('keyup', function(e){
 		if(self.canRotate(self.fallingBlock)){
 			switch(e.keyCode){
 				case 65:
@@ -195,7 +196,8 @@ Game.prototype.onKeyboard=function(){
 			}
 		}
 	});
-	addEventListener("keydown",function(e){
+	// addEventListener("keydown",function(e){
+	$(window).bind('keydown', function(e){
 		switch(e.keyCode){
 			case 38:
 			e.preventDefault();
@@ -222,15 +224,18 @@ Game.prototype.onTouchScreen=function(){
 	var canvas=self.cx.canvas;
 	var startTouch;
 	var deformDiv=document.querySelector('.deform');
-	deformDiv.addEventListener('touchstart', function(e){
+	// deformDiv.addEventListener('touchstart', function(e){
+	$(deformDiv).bind('touchstart', function(e){
 		e.preventDefault();
 		self.deformBlock(self.fallingBlock);
 	})
-	canvas.addEventListener('touchstart', function(e){
+	// canvas.addEventListener('touchstart', function(e){
+	$(canvas).bind('touchstart', function(e){
 		e.preventDefault();
 		startTouch=e.changedTouches[0];
 	});
-	canvas.addEventListener('touchmove', function(e){
+	// canvas.addEventListener('touchmove', function(e){
+	$(canvas).bind('touchmove', function(e){
 		var currentTouch=e.changedTouches[0];
 		var touchType=judgeTouchType(startTouch, currentTouch, self.squareSide*4);
 		if(touchType=='up'){
@@ -248,18 +253,21 @@ Game.prototype.onTouchScreen=function(){
 		}
 		
 	});
-	canvas.addEventListener('touchend', function(e){
+	// canvas.addEventListener('touchend', function(e){
+	$(canvas).bind('touchend', function(e){
 		startTouch=null;
 	});
 	var shunBtn=document.querySelector('#shun');
 	var niBtn=document.querySelector('#ni');
-	shunBtn.addEventListener('touchstart', function(e){
+	// shunBtn.addEventListener('touchstart', function(e){
+	$(shunBtn).bind('touchstart', function(e){
 		e.preventDefault();
 		if(self.canRotate(self.fallingBlock)){
 			self.rotate(Math.PI*2/3);
 		}
 	});
-	niBtn.addEventListener('touchstart', function(e){
+	// niBtn.addEventListener('touchstart', function(e){
+	$(niBtn).bind('touchstart', function(e){
 		e.preventDefault();
 		if(self.canRotate(self.fallingBlock)){
 			self.rotate(-Math.PI*2/3);
@@ -270,7 +278,7 @@ Game.prototype.onMouse=function(){
 	var self=this;
 	var pauseBtn=document.querySelector('.pause');
 	var pauseBtnSpan=pauseBtn.querySelector('span');
-	pauseBtn.addEventListener('click', function(){
+	$(pauseBtn).bind('click', function(){
 		if(pauseBtnSpan.innerText=='Pause'){
 			self.pause();
 			pauseBtnSpan.innerText='Continue';
@@ -278,23 +286,8 @@ Game.prototype.onMouse=function(){
 			self.continue();
 			pauseBtnSpan.innerText='Pause';
 		}
-	});
-	// pauseBtn.addEventListener('click', this.pauseOrContinue);
+	})
 };
-// Game.prototype.pauseOrContinue=function(e){
-// 	var pauseBtnSpan=document.querySelector('.pause').querySelector('span');
-// 	var self=this;
-// 	console.log(this.stillSquares.length);
-// 	console.log(pauseBtnSpan.innerText);
-// 		if(pauseBtnSpan.innerText=='Pause'){
-
-// 			self.pause();
-// 			pauseBtnSpan.innerText='Continue';
-// 		}else if(pauseBtnSpan.innerText=='Continue'){
-// 			self.continue();
-// 			pauseBtnSpan.innerText='Pause';
-// 		}
-// };
 Game.prototype.hitTest=function(block, lastCoor){
 	var distance;
 	for(var ii=0, nn=block.squares.length; ii<nn; ii++){
@@ -448,8 +441,13 @@ Game.prototype.displayBest=function(){
 Game.prototype.afterLosing=function(){
 	var loseInterface=document.querySelector("#lose");
 	loseInterface.style.display="block";
-	// var pauseBtn=document.querySelector('.pause');
-	// pauseBtn.removeEventListener('click', this.pauseOrContinue);
+	
+	$(window).unbind();
+	$('canvas').unbind();
+	$('.deform').unbind();
+	$('#shun').unbind();
+	$('#ni').unbind();
+	$('.pause').unbind();
 };
 
 
