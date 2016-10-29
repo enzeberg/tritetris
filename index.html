@@ -60,13 +60,13 @@
 	enjoyAgain.addEventListener("click", function(){
 		cx.clearRect(-cv.width/2, -cv.height/2, cv.width, cv.height);
 		document.querySelector("#lose").style.display="none";
-		game0.stillSquares.forEach(function(sS){
-			sS.thetas.length=0;
-		});
-		game0.interval=null;
-		game0.stillSquares=null;
-		game0.fallingBlock=null;
-		game0.hoverBlock=null;
+		// game0.stillSquares.forEach(function(sS){
+		// 	sS.thetas.length=0;
+		// });
+		// game0.interval=null;
+		// game0.stillSquares=null;
+		// game0.fallingBlock=null;
+		// game0.hoverBlock=null;
 		game0=new Game(squareSide, cx);
 		game0.start();
 	});
