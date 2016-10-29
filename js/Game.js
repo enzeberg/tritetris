@@ -269,33 +269,32 @@ Game.prototype.onTouchScreen=function(){
 Game.prototype.onMouse=function(){
 	var self=this;
 	var pauseBtn=document.querySelector('.pause');
-	// var pauseBtnSpan=pauseBtn.querySelector('span');
-	// pauseBtn.addEventListener('click', function(){
-		// console.log(pauseBtnSpan.innerText);
-		// if(pauseBtnSpan.innerText=='Pause'){
-		// 	self.pause();
-		// 	pauseBtnSpan.innerText='Continue';
-		// }else if(pauseBtnSpan.innerText=='Continue'){
-		// 	self.continue();
-		// 	pauseBtnSpan.innerText='Pause';
-		// }
-	// });
-	pauseBtn.addEventListener('click', this.pauseOrContinue);
-};
-Game.prototype.pauseOrContinue=function(e){
-	var pauseBtnSpan=document.querySelector('.pause').querySelector('span');
-	var self=this;
-	console.log(this.stillSquares.length);
-	console.log(pauseBtnSpan.innerText);
+	var pauseBtnSpan=pauseBtn.querySelector('span');
+	pauseBtn.addEventListener('click', function(){
 		if(pauseBtnSpan.innerText=='Pause'){
-
 			self.pause();
 			pauseBtnSpan.innerText='Continue';
 		}else if(pauseBtnSpan.innerText=='Continue'){
 			self.continue();
 			pauseBtnSpan.innerText='Pause';
 		}
+	});
+	// pauseBtn.addEventListener('click', this.pauseOrContinue);
 };
+// Game.prototype.pauseOrContinue=function(e){
+// 	var pauseBtnSpan=document.querySelector('.pause').querySelector('span');
+// 	var self=this;
+// 	console.log(this.stillSquares.length);
+// 	console.log(pauseBtnSpan.innerText);
+// 		if(pauseBtnSpan.innerText=='Pause'){
+
+// 			self.pause();
+// 			pauseBtnSpan.innerText='Continue';
+// 		}else if(pauseBtnSpan.innerText=='Continue'){
+// 			self.continue();
+// 			pauseBtnSpan.innerText='Pause';
+// 		}
+// };
 Game.prototype.hitTest=function(block, lastCoor){
 	var distance;
 	for(var ii=0, nn=block.squares.length; ii<nn; ii++){
@@ -449,8 +448,8 @@ Game.prototype.displayBest=function(){
 Game.prototype.afterLosing=function(){
 	var loseInterface=document.querySelector("#lose");
 	loseInterface.style.display="block";
-	var pauseBtn=document.querySelector('.pause');
-	pauseBtn.removeEventListener('click', this.pauseOrContinue);
+	// var pauseBtn=document.querySelector('.pause');
+	// pauseBtn.removeEventListener('click', this.pauseOrContinue);
 };
 
 
