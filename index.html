@@ -23,19 +23,24 @@
 	
 	<div class="right_area">
 		<div class="pause"><span>Pause</span></div>
+		<div class="landing_interval">Landing interval: 
+			<br>
+			<div id="interval_value"></div>
+		</div>
+		<div class="about_score">
+			<div id="score_addition"></div>
+			<div class="score_and_best">
+				<div id="score"></div>
+				<div id="best"></div>
+			</div>
+		</div>
 	</div>
 <!-- </div> -->
 <div id="lose">
 	<p>Oops, you lose!</p>
-	<div id="enjoy_again">Enjoy Again</div>
+	<div id="enjoy_again">Enjoy again</div>
 </div>
-<div class="about_score">
-	<div id="score_addition"></div>
-	<div class="score_and_best">
-		<div id="score"></div>
-		<div id="best"></div>
-	</div>
-</div>
+
 <script src="./js/jquery-3.1.1.min.js"></script>
 <script src="./js/Vector.js"></script>
 <script src="./js/library.js"></script>
@@ -72,12 +77,10 @@
 	});
 </script>
 
-<audio src="./music/Tassel-Cymophane.mp3" controls="controls" preload="preload" loop="loop"
-       style="width: 60%;height: 50px; margin-left: 20%; margin-right: 20%;">
-</audio>
+ <audio src="./music/Tassel-Cymophane.mp3" controls="controls"  preload="preload" loop="loop"
+ 	style="width: 60%;height: 50px; margin-left: 20%; margin-right: 20%;"></audio>
 
 <div id="introduction">
-
 	<h3>HOW TO PLAY:</h3>
 	<p><strong>[for Desktop] </strong>Use the four arrow keys to move or deform the falling tetromino and key A or D to rotate the triangle.
 	</p>
