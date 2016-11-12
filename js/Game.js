@@ -16,6 +16,7 @@ Game.prototype.start=function(){
 	this.prepareLine();
 	this.designNextBlock();
 	this.prepareBlocks();
+	this.showLandingInterval();
 	this.giveBlockHint();
 	this.onKeyboard();
 	this.onTouchScreen();
@@ -358,8 +359,10 @@ Game.prototype.checkIfShouldClear=function(){
 			linesClearedNum++;
 			scoreAddition+=linesClearedNum*10;
 			
-			if(self.fallingInterval>400)
+			if(self.fallingInterval>400){
 				self.fallingInterval-=20;
+				self.showLandingInterval();
+			}
 		}
 	}
 	if(scoreAddition>0){
@@ -388,6 +391,10 @@ Game.prototype.designNextBlock=function(){
 	var blockTypes=["I", "J", "L", "O", "S", "Z", "T"];
 	this.nextBlockType=blockTypes[Math.floor(Math.random()*7)];
 };
+Game.prototype.showLandingInterval=function(){
+	var speedSpan=document.querySelector('#interval_value');
+	speedSpan.innerText=this.fallingInterval+'ms';
+}
 Game.prototype.giveBlockHint=function(){
 	this.designNextBlock();
 	if(this.hintBlock)
