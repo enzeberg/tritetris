@@ -24,7 +24,7 @@ high as possible.</p>
 ##Note
 <ul>
 	<li>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle.</li>
-	<li>when the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
+	<li>When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
 </ul>
 
 ##Reminder
