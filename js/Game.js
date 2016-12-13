@@ -14,7 +14,7 @@ Game.prototype.start=function(){
 	this.fallingInterval=1000; 
 	this.prepareTriangle();
 	this.prepareLine();
-	this.designNextBlock();
+	this.decideNextBlock();
 	this.prepareBlocks();
 	this.showLandingInterval();
 	this.giveBlockHint();
@@ -100,8 +100,9 @@ Game.prototype.deformBlock=function(block){
 		}
 	}
 	block.setSquareCoors();
-	if(block.topleft.x+block.width>=100){ //避免有些情况下右侧的方块不能变形
-		block.topleft.x=100-block.width;
+	var halfOfTriangleSide=0.5*(this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1));
+	if(block.topleft.x+block.width>halfOfTriangleSide){ //避免有些情况下右侧的方块不能变形
+		block.topleft.x=halfOfTriangleSide-block.width;
 		block.setSquareCoors();
 	}
 	if(this.hitTest(block)){
@@ -305,14 +306,14 @@ Game.prototype.hitTest=function(block, lastCoor){
 		}
 
 	}
-	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
-	var yLimit=-triSide/(2*Math.sqrt(3))-3;
+	var halfOfTriangleSide=0.5*(this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1));
+	var yLimit=-halfOfTriangleSide/Math.sqrt(3)-3;
 	// console.log(yLimit);
 	if(block.topleft.y+block.height>yLimit){
 		// console.log('block.topleft.y+block.height', block.topleft.y+block.height);
 		return true;
 	}
-	if(block.topleft.x<-triSide/2||block.topleft.x+block.width>triSide/2)
+	if(block.topleft.x<-halfOfTriangleSide||block.topleft.x+block.width>halfOfTriangleSide)
 		return true;
 	return false;
 };
@@ -387,16 +388,17 @@ Game.prototype.checkIfLose=function(){
 		return true;
 	}
 };
-Game.prototype.designNextBlock=function(){
+Game.prototype.decideNextBlock=function(){
 	var blockTypes=["I", "J", "L", "O", "S", "Z", "T"];
 	this.nextBlockType=blockTypes[Math.floor(Math.random()*7)];
+	//this.nextBlockType='L';
 };
 Game.prototype.showLandingInterval=function(){
 	var speedSpan=document.querySelector('#interval_value');
 	speedSpan.innerText=this.fallingInterval+'ms';
 }
 Game.prototype.giveBlockHint=function(){
-	this.designNextBlock();
+	this.decideNextBlock();
 	if(this.hintBlock)
 		this.hintBlock.disappear();	
 	this.hintBlock=new Block(this.nextBlockType, this.squareSide, this.gap, this.cx);
