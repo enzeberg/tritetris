@@ -15,7 +15,8 @@ Square.prototype.disappear=function(){
   var cx=this.cx;
   //cx.fillStyle=cx.canvas.style.backgroundColor;
   cx.strokeStyle=cx.canvas.style.backgroundColor;
-  cx.lineWidth=3.5;
+  // cx.lineWidth=3.5;
+  cx.lineWidth=1/8*this.side+1.5;
   makeClosedPath(cx, this.apex1, this.apex2, this.apex3, this.apex4);
   //cx.fill();
   cx.stroke();//这样做可以清楚Square旋转而留下的痕迹，痕迹可能是边框造成的（虽然display中没有stroke边框）。
@@ -23,7 +24,8 @@ Square.prototype.disappear=function(){
 Square.prototype.display=function(){
   var cx=this.cx;
   cx.strokeStyle=this.color;
-  cx.lineWidth=2;
+  // cx.lineWidth=2;
+  cx.lineWidth=1/8*this.side;
   cx.lineJoin="miter";
   //cx.fillStyle=this.color;
   makeClosedPath(cx, this.apex1, this.apex2, this.apex3, this.apex4);

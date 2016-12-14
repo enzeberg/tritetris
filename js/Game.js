@@ -2,7 +2,8 @@ function Game(squareSide, cx){
 	this.squareSide=squareSide;
 	this.numOfSquareRow=10;
 	this.cx=cx;
-	this.gap=4;
+	// this.gap=4;
+	this.gap=1/4*this.squareSide;
 }
 Game.prototype.start=function(){
 	this.stillSquares=[];//save the squares that are already still on the triangle.
@@ -91,6 +92,8 @@ Game.prototype.makeBlockFall=function(block){
 Game.prototype.deformBlock=function(block){
 	if(!block)
 		return;
+	var halfOfTriangleSide=0.5*(this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1));
+	var rightEdgeToRightLimit=halfOfTriangleSide-(block.topleft.x+block.width);
 	block.disappear();
 	var patternRecord=block.pattern;
 	for(var i=0, n=block.patterns.length; i<n; i++){
@@ -100,9 +103,9 @@ Game.prototype.deformBlock=function(block){
 		}
 	}
 	block.setSquareCoors();
-	var halfOfTriangleSide=0.5*(this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1));
 	if(block.topleft.x+block.width>halfOfTriangleSide){ //避免有些情况下右侧的方块不能变形
-		block.topleft.x=halfOfTriangleSide-block.width;
+		// block.topleft.x=halfOfTriangleSide-block.width;
+		block.topleft.x-=block.topleft.x+block.width-halfOfTriangleSide+rightEdgeToRightLimit;
 		block.setSquareCoors();
 	}
 	if(this.hitTest(block)){
@@ -307,7 +310,7 @@ Game.prototype.hitTest=function(block, lastCoor){
 
 	}
 	var halfOfTriangleSide=0.5*(this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1));
-	var yLimit=-halfOfTriangleSide/Math.sqrt(3)-3;
+	var yLimit=-halfOfTriangleSide/Math.sqrt(3)-this.gap;
 	// console.log(yLimit);
 	if(block.topleft.y+block.height>yLimit){
 		// console.log('block.topleft.y+block.height', block.topleft.y+block.height);

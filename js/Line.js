@@ -7,7 +7,7 @@ function Line(length, r2center, color, cx){
 Line.prototype.display=function(){
 	var cx=this.cx;
 	cx.strokeStyle=this.color;
-	cx.lineWidth=1;
+	cx.lineWidth=0.005*this.length;
 	cx.beginPath();
 	cx.moveTo(-this.length/2, -this.r2center);
 	cx.lineTo(this.length/2, -this.r2center);

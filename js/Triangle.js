@@ -10,13 +10,15 @@ function Triangle(angle,r,color,cx){//r means the radius of its circumcircle
 Triangle.prototype.disappear=function(){
   var cx=this.cx;
   cx.strokeStyle=cx.canvas.style.backgroundColor;
-  cx.lineWidth=13.5;
+  // cx.lineWidth=13.5;
+  cx.lineWidth=0.11*this.r;
   makeClosedPath(cx, this.apex1, this.apex2, this.apex3);
   cx.stroke();
 };
 Triangle.prototype.display=function(){
   var cx=this.cx;
-  cx.lineWidth=10;
+  // cx.lineWidth=10;
+  cx.lineWidth=0.08*this.r;
   cx.lineJoin="round";
   cx.strokeStyle=this.color;
   makeClosedPath(cx, this.apex1, this.apex2, this.apex3);
