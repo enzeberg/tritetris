@@ -8,16 +8,16 @@ function Game(squareSide, cx){
 Game.prototype.start=function(){
 	this.stillSquares=[];//save the squares that are already still on the triangle.
 	this.score=0;
-	this.displayScore();
+	ui.displayScore(this.score);
 	this.initBestStorage();
 	this.bestScore=localStorage.getItem("t_best")||0;
-	this.displayBest();
+	ui.displayBest(this.bestScore);
 	this.fallingInterval=1000; 
 	this.prepareTriangle();
 	this.prepareLine();
 	this.decideNextBlock();
 	this.prepareBlocks();
-	this.showLandingInterval();
+	ui.showLandingInterval(this.fallingInterval);
 	this.giveBlockHint();
 	this.onKeyboard();
 	this.onTouchScreen();
@@ -60,7 +60,7 @@ Game.prototype.makeBlockFall=function(block){
 	var self=this;
 	self.fallingBlock=block;
 	var hitted=false;
-	self.interval=setInterval(function(){
+	self.interval=setInterval(function(){  //window.setInterval
 		var coorRecord=new Vector(block.topleft.x, block.topleft.y);	
 		block.disappear();
 		block.topleft.y+=step;
@@ -365,22 +365,23 @@ Game.prototype.checkIfShouldClear=function(){
 			
 			if(self.fallingInterval>400){
 				self.fallingInterval-=20;
-				self.showLandingInterval();
+				ui.showLandingInterval(self.fallingInterval);
 			}
 		}
 	}
 	if(scoreAddition>0){
-		self.displayScoreAddition(scoreAddition);
+		ui.displayScoreAddition(scoreAddition);
 		self.score+=scoreAddition;
-		self.displayScore();
+		ui.displayScore(self.score);
 		self.handleBestStorage();
-		self.displayBest();
+		ui.displayBest(self.bestScore);
 	}
 
 };
 Game.prototype.checkIfLose=function(){
-	var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
-	var loseEdge=-triSide/(Math.sqrt(3)*2)-10*this.squareSide-9*this.gap;
+	// var triSide=this.squareSide*this.numOfSquareRow+this.gap*(this.numOfSquareRow+1);
+	// var loseEdge=-triSide/(Math.sqrt(3)*2)-10*this.squareSide-9*this.gap;
+	var loseEdge=-this.cx.canvas.height/2;
 	var minStillY=0;
 	this.stillSquares.forEach(function(s){
 		minStillY=s.topleft.y<minStillY? s.topleft.y: minStillY;
@@ -396,10 +397,7 @@ Game.prototype.decideNextBlock=function(){
 	this.nextBlockType=blockTypes[Math.floor(Math.random()*7)];
 	//this.nextBlockType='L';
 };
-Game.prototype.showLandingInterval=function(){
-	var speedSpan=document.querySelector('#interval_value');
-	speedSpan.innerText=this.fallingInterval+'ms';
-}
+
 Game.prototype.giveBlockHint=function(){
 	this.decideNextBlock();
 	if(this.hintBlock)
@@ -409,28 +407,6 @@ Game.prototype.giveBlockHint=function(){
 	this.hintBlock.topleft.y=-this.squareSide*2;
 	this.hintBlock.setSquareCoors();
 	this.hintBlock.display();
-};
-Game.prototype.displayScoreAddition=function(addition){
-	var additionEle=document.querySelector("#score_addition");
-	var color;
-	switch(addition){
-		case 10:
-			color="gray"; break;
-		case 30:
-			color="olive"; break;
-		case 60:
-			color="orange"; break;
-		case 100:
-			color="gold"; break;
-	}
-	additionEle.style.color=color;
-	additionEle.innerText="+"+addition;
-	$(additionEle).show();
-	$(additionEle).hide(2000);
-};
-Game.prototype.displayScore=function(){	
-	var scoreArea=document.querySelector("#score");
-	scoreArea.innerText=this.score;	
 };
 Game.prototype.initBestStorage=function(){
 	if(window.localStorage){
@@ -446,14 +422,10 @@ Game.prototype.handleBestStorage=function(){
 	}
 	this.bestScore=localStorage.getItem("t_best");
 }
-Game.prototype.displayBest=function(){
-	var bestArea=document.querySelector("#best");
-	bestArea.innerText="BEST: "+ this.bestScore;
-};
+
 Game.prototype.afterLosing=function(){
-	var loseInterface=document.querySelector("#lose");
-	loseInterface.style.display="block";
 	
+	ui.lose();
 	$(window).unbind();
 	$('canvas').unbind();
 	$('.deform').unbind();
