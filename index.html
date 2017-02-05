@@ -9,39 +9,72 @@
 </head>
 
 <body>
-<div id="head">Tritetris</div>
-<!-- <div class="main"> -->
-	<div class="left_area">
-		<div class="deform">
-			<span>Deform</span>
-		</div>
-		<div id="shun"><span>A</span></div>
-		<div id="ni"><span>D</span></div>
-	</div>
-
-	<canvas   style="background-color:rgb(200,180,150)"></canvas>
-
 	
-	<div class="right_area">
-		<div class="pause"><span>Pause</span></div>
-		<div class="landing_interval">Landing interval: 
-			<br>
-			<div id="interval_value"></div>
+	<div class="container">
+		<div class="heading">
+			<h1 class="title">Tritetris</h1>
 		</div>
-		<div class="about_score">
-			<div id="score_addition"></div>
-			<div class="score_and_best">
-				<div id="score"></div>
-				<div id="best"></div>
+		<div class="game-container">
+			<div class="lose-container">
+				<div class="lose">
+					<!-- <br><br><br><br> -->
+					<p>Oops, you lose!</p>
+					<div id="enjoy_again">Enjoy Again</div>
+				</div>
+			</div>
+			<div class="top-area">
+				<div class="landing-interval">Landing Interval: 
+					
+					<span class="interval-value"></span>
+				</div>
+				<div class="about-score">
+					<div class="score-and-best">
+						<div class="best"></div>
+						<div class="score"></div>
+					</div>
+				</div>
+			</div>
+			<canvas   style="background-color:rgb(200,180,150)"></canvas>
+			<div class="bottom-area">
+				<div class="pause"><span>Pause</span></div>
+				<div class="deform"><span>Deform</span></div>
+				<div id="shun"><span>Clockwise</span></div>
+				<div id="ni"><span>Anticlockwise</span></div>
+			</div>
+			
+		</div>
+		
+		<audio src="./music/Tassel-Cymophane.mp3" controls="controls"  preload="preload" loop="loop"
+		 	style="width: 60%;height: 50px; margin-left: 20%; margin-right: 20%;"></audio>
+
+		<div id="introduction">
+			<div class="how-to-play">
+				<h3>HOW TO PLAY:</h3>
+				<h4>[for Desktop]  <span style="font-style: italic;">(Recommended)</span></h4>
+				<p>Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.</p>
+
+				<h4>[for Mobile]</h4>
+				<p>Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.</p>
+			</div>
+
+			<div class="note">
+				<h3>NOTE:</h3>
+				<ul>
+					<li>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle.</li>
+					<li>When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
+				</ul>
+			</div>
+
+			<div class="reminder">
+				<h3>REMINDER:</h3>
+				<p>The more rows of squares you remove one time, the higher score you get!</p>
+			</div>
+
+			<div class="about">
+				<p>a Li Enze game</p>
 			</div>
 		</div>
 	</div>
-<!-- </div> -->
-<div id="lose">
-	<p>Oops, you lose!</p>
-	<div id="enjoy_again">Enjoy again</div>
-</div>
-
 <script src="./js/jquery-3.1.1.min.js"></script>
 <script src="./js/Vector.js"></script>
 <script src="./js/library.js"></script>
@@ -50,13 +83,14 @@
 <script src="./js/Square.js"></script>
 <script src="./js/Block.js"></script>
 <script src="./js/Game.js"></script>
+<script src="./js/ui.js"></script>
 <script>
-	var screenWidth=screen.width;
-	var screenHeight=screen.height;
+	
 	var cv=document.querySelector("canvas");
-	cv.width=screenWidth*0.6;
-	cv.height=screenHeight*0.88;
-	var squareSide=Math.floor(0.012*screenWidth);
+
+	cv.width=500;//roughly!!!  It's ok!
+	cv.height=cv.width;
+	var squareSide=0.032*cv.width;
 
 	var cx=cv.getContext("2d");
 	cx.translate(cv.width/2, cv.height/2);
@@ -65,53 +99,14 @@
 	var enjoyAgain=document.querySelector("#enjoy_again");
 	enjoyAgain.addEventListener("click", function(){
 		cx.clearRect(-cv.width/2, -cv.height/2, cv.width, cv.height);
-		document.querySelector("#lose").style.display="none";
-		// game0.stillSquares.forEach(function(sS){
-		// 	sS.thetas.length=0;
-		// });
-		// game0.interval=null;
-		// game0.stillSquares=null;
-		// game0.fallingBlock=null;
-		// game0.hoverBlock=null;
+		document.querySelector(".lose-container").style.display="none";
 		game0=new Game(squareSide, cx);
 		game0.start();
 	});
 </script>
 
- <audio src="./music/Tassel-Cymophane.mp3" controls="controls"  preload="preload" loop="loop"
- 	style="width: 60%;height: 50px; margin-left: 20%; margin-right: 20%;"></audio>
 
-<div id="introduction">
-	<h3>How to play:</h3>
-	<h4>[for Desktop]  <span style="font-style: italic;">(Recommended)</span></h4>
-	<ul>
-		<li>Left/Right arrow: Move the block.</li>
-		<li>Up arrow: Deform the block.</li>
-		<li>Down arrow: Make the block fall faster.</li>
-		<li>"A" key: Rotate the triangle clockwise.</li>
-		<li>"D" key: Rotate the triangle anti-clockwise.</li>
-	</ul>
-	<h4>[for Mobile]</h4>
-	<ul>
-		<li>Touch the gray center area to move and deform the block.</li>
-		<li>Touch the buttons in the left area to rotate the triangle and deform the block.</li>
-	</ul>
 
-	<h3>Note:</h3>
-	<ul>
-		<li>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle.</li>
-		<li>When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
-	</ul>
 
-	<h3>Reminder:</h3>
-	<ul>
-		<li>Play it on a mobile device which has a big screen, such as iPad. If your phone <strong>(except iPhone)</strong> screen is small, please use the horizontal screen <strong>before opening this web page.</strong></li>
-		<li>The more rows of squares you remove one time, the higher score you get!</li>
-	</ul>
-	
-	<div id="about">
-		<p>a Li Enze game</p>
-	</div>
-</div>
 </body>
 </html>
