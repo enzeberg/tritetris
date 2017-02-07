@@ -7,19 +7,10 @@ high as possible.</p>
 <img src="./images/tritetris.png">
 
 ##How to play
-<h3>[for Desktop]</h3>
-<ul>
-	<li>Left/Right arrow: Move the block.</li>
-	<li>Up arrow: Deform the block.</li>
-	<li>Down arrow: Make the block fall faster.</li>
-	<li>"A" key: Rotate the triangle clockwise.</li>
-	<li>"D" key: Rotate the triangle anti-clockwise.</li>
-</ul>
-<h3>[for Mobile]</h3>
-<ul>
-	<li>Touch the gray area to move and deform the block.</li>
-	<li>Touch the buttons in the left area to rotate the triangle and deform the block.</li>
-</ul>
+<h4>[for Desktop] </h4>
+<p>Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.</p>
+<h4>[for Mobile]</h4>
+<p>Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.</p>
 
 ##Note
 <ul>
@@ -28,8 +19,5 @@ high as possible.</p>
 </ul>
 
 ##Reminder
-<ul>
-	<li>Play it on a mobile device which has a big screen, such as iPad. If your phone <strong>(except iPhone)</strong> screen is small, please use the horizontal screen <strong>before opening this web page.</strong></li>
-	<li>The more rows of squares you remove one time, the higher score you get!</li>
-</ul>
+<p>The more rows of squares you remove one time, the higher score you get!</p>
 
