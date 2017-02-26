@@ -16,7 +16,6 @@ h1.title{
 }
 
 .container{
-  /*width: 40%;*/
   width: 500px;
   margin: 50px auto;
 }
@@ -25,21 +24,14 @@ h1.title{
   width: 150px;
   height: 60px;
   margin: auto 5px;
-  /*padding: 5px 2px;*/
   background: #f7b61f;
   text-align: center;
   border-radius: 3px;
 }
 
-
-/*.score-and-best{
-  height: 100px;
-}*/
-.pause{
+.pause-or-continue-btn, .deform-btn, .clockwise-btn, .anticlockwise-btn{
   cursor: pointer;
 }
-
-
 
 @keyframes go-up{
   from{
@@ -88,21 +80,13 @@ h1.title{
 }
 .landing-interval, .score, .best{
   color: gray;
-  /*word-wrap: normal;*/
   font-size: 18px;
   line-height: 30px;
-  /*border: 1px solid;*/
 }
 
 canvas{
-/*  width: 60%;
-  height: 80%;*/
-  /*width: 600px;
-  height: 600px;*/
   margin: 8px 0;
   border-radius: 5px;
- /* margin-left: 20%;
-  margin-right: 20%;*/
 }
 .lose-container{
   display: none;
@@ -116,7 +100,6 @@ canvas{
   bottom: 0;
   left: 0;
   z-index: 100;
-  /*padding-top: 200px;*/
 }
 .lose{
   width: 400px;
@@ -124,10 +107,9 @@ canvas{
   border-radius: 5px;
   margin: 0 auto;
   padding-top: 130px;
-  /*padding: 5px 2px;*/
   background-color:rgba(250,210,150,0.5);
 }
-.lose #enjoy_again{
+.lose .replay-btn{
   background-color: #f7b61f;
   font-size: 20px;
   line-height: 30px;
@@ -140,7 +122,7 @@ canvas{
 
 }
 
-.bottom-area .deform, #shun, #ni, .pause{
+.bottom-area .pause-or-continue-btn, .deform-btn, .clockwise-btn, .anticlockwise-btn{
   float: left;
   width: 120px;
   height: 30px;
@@ -154,7 +136,7 @@ canvas{
 }
 
 
-#introduction{
+.introduction{
   padding-top: 70px;
   color:gray;
   
@@ -180,25 +162,17 @@ canvas{
     margin: 30px auto;
   }
   .top-area .score-and-best, .landing-interval{
-    /*float: right;*/
     width: 120px;
     height: 40px;
     margin: auto 2px;
-    /*padding: 5px 2px;*/
-    /*background: #f7b61f;*/
-    /*text-align: center;*/
-    /*border-radius: 3px;*/
   }
   canvas{
     width: 280px;
     height: 280px;
   }
   .landing-interval, .score, .best{
-    /*color: gray;*/
-    /*word-wrap: normal;*/
     font-size: 12px;
     line-height: 20px;
-    /*border: 1px solid;*/
   }
   .lose-container{
     top: 150px;
@@ -208,26 +182,13 @@ canvas{
     height: 185px;
     border-radius: 2px;
     padding-top: 35px;
-    /*margin: 0 auto;*/
-    /*padding: 5px 2px;*/
-    /*background-color:rgba(250,210,150,0.5);*/
   }
-
-
-  .bottom-area .deform, #shun, #ni, .pause{
-    /*float: left;*/
+  .bottom-area .pause-or-continue-btn, .deform-btn, .clockwise-btn, .anticlockwise-btn{
     width: 136px;
-    /*height: 30px;*/
-    /*line-height: 30px;*/
-    /*padding: 5px 0;*/
     margin: 2px 2px;
     font-size: 12px;
-    /*background: #f7b61f;
-    text-align: center;
-    border-radius: 3px;
-    color: white;*/
   }
-  #introduction{
+  .introduction{
     padding-top: 110px;
     
   }
