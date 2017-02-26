@@ -15,9 +15,7 @@
 	<meta property="og:site_name" content="Tritetris"/>
 	<meta property="og:description" content="A quite interesting game that extends from Tetris."/>
 </head>
-
 <body>
-	
 	<div class="container">
 		<div class="heading">
 			<h1 class="title">Tritetris</h1>
@@ -25,14 +23,12 @@
 		<div class="game-container">
 			<div class="lose-container">
 				<div class="lose">
-					<!-- <br><br><br><br> -->
 					<p>Oops, you lose!</p>
-					<div id="enjoy_again">Enjoy Again</div>
+					<div class="replay-btn">Enjoy Again</div>
 				</div>
 			</div>
 			<div class="top-area">
-				<div class="landing-interval">Landing Interval: 
-					
+				<div class="landing-interval">Landing Interval: 		
 					<span class="interval-value"></span>
 				</div>
 				<div class="about-score">
@@ -42,20 +38,17 @@
 					</div>
 				</div>
 			</div>
-			<canvas   style="background-color:rgb(200,180,150)"></canvas>
+			<canvas class="game-canvas" style="background-color:rgb(200,180,150)"></canvas>
 			<div class="bottom-area">
-				<div class="pause"><span>Pause</span></div>
-				<div class="deform"><span>Deform</span></div>
-				<div id="shun"><span>Clockwise</span></div>
-				<div id="ni"><span>Anticlockwise</span></div>
+				<div class="pause-or-continue-btn">Pause</div>
+				<div class="deform-btn">Deform</span></div>
+				<div class="clockwise-btn">Clockwise</span></div>
+				<div class="anticlockwise-btn">Anticlockwise</div>
 			</div>
 			
 		</div>
-		
-		<!-- <audio src="./music/Tassel-Cymophane.mp3" controls="controls"  preload="preload" loop="loop"
-		 	style="width: 60%;height: 50px; margin-left: 20%; margin-right: 20%;"></audio> -->
 
-		<div id="introduction">
+		<div class="introduction">
 			<div class="how-to-play">
 				<h3>HOW TO PLAY:</h3>
 				<h4>[for Desktop]  <span style="font-style: italic;">(Recommended)</span></h4>
@@ -83,38 +76,25 @@
 			</div>
 		</div>
 	</div>
-<script src="./js/jquery-3.1.1.min.js"></script>
-<script src="./js/Vector.js"></script>
-<script src="./js/library.js"></script>
-<script src="./js/Triangle.js"></script>
-<script src="./js/Line.js"></script>
-<script src="./js/Square.js"></script>
-<script src="./js/Block.js"></script>
-<script src="./js/Game.js"></script>
-<script src="./js/ui.js"></script>
-<script>
-	
-	var cv=document.querySelector("canvas");
 
-	cv.width=500;//roughly!!!  It's ok!
-	cv.height=cv.width;
-	var squareSide=0.032*cv.width;
+	<script src="./js/vector.js"></script>	
+	<script src="./js/triangle.js"></script>
+	<script src="./js/line.js"></script>
+	<script src="./js/square.js"></script>
+	<script src="./js/block.js"></script>
+	<script src="./js/input_manager.js"></script>
+	<script src="./js/local_storage_manager.js"></script>
+	<script src="./js/ui_manager.js"></script>
+	<script src="./js/game.js"></script>
+	<script>		
+		var cv = document.querySelector("canvas");
+		cv.width = 500;//roughly!!!  It's ok!
+		cv.height = cv.width;
+		var squareSide = 0.032*cv.width;
 
-	var cx=cv.getContext("2d");
-	cx.translate(cv.width/2, cv.height/2);
-	var game0=new Game(squareSide, cx);
-	game0.start();
-	var enjoyAgain=document.querySelector("#enjoy_again");
-	enjoyAgain.addEventListener("click", function(){
-		cx.clearRect(-cv.width/2, -cv.height/2, cv.width, cv.height);
-		document.querySelector(".lose-container").style.display="none";
-		game0=new Game(squareSide, cx);
-		game0.start();
-	});
-</script>
-
-
-
-
+		var cx = cv.getContext("2d");
+		cx.translate(cv.width/2, cv.height/2);
+		var game = new Game(squareSide, cx);		
+	</script>
 </body>
 </html>
