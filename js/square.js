@@ -16,6 +16,7 @@ Square.prototype.display = function() {
   var cx = this.cx;
   cx.strokeStyle = this.color;
   cx.lineWidth = 0.125 * this.side;
+  cx.lineJoin="miter";
   this.makeClosedPath(this.apex1, this.apex2, this.apex3, this.apex4);
   cx.stroke();
 };
