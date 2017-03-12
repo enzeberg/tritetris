@@ -1,125 +1,160 @@
-function Block(shape,squareSide,gap,cx){
-  this.squareSide=squareSide;
-  this.gap=gap;
-  this.cx=cx;
-  var cvHeight=cx.canvas.height;
+function Block(topleft, shape, squareSide, gap, cx) {
+  this.topleft = topleft;
+  this.shape = shape;
+  this.squareSide = squareSide;
+  this.gap = gap;
+  this.cx = cx;
+  var cvHeight = cx.canvas.height;
   var color;
-  var col, row;
-  var pattern1,pattern2,pattern3,pattern4;
-  this.patterns=[];
-  this.pattern="";
-  this.squares=[];
-  // this.falling=false;
-  switch(shape){
+  var startY, col, row, maxCol;
+  var pattern1, pattern2, pattern3, pattern4;
+
+  this.squares = [];
+  // this.falling = false;
+  switch(shape) {
     case "I":
-      color="wheat";
-      pattern1="00010203";
-      pattern2="00102030";
-      pattern3=pattern1;
-      pattern4=pattern2;
+      color = "wheat";
+      pattern1 = "00010203";
+      pattern2 = "00102030";
+      pattern3 = pattern1;
+      pattern4 = pattern2;
       break;
     case "J":
-      color="hotpink";
-      pattern1="10111202";
-      pattern2="00011121";
-      pattern3="00010210";
-      pattern4="00102021";
+      color = "hotpink";
+      pattern1 = "10111202";
+      pattern2 = "00011121";
+      pattern3 = "00010210";
+      pattern4 = "00102021";
       break;
     case "L":
-      color="aqua";
-      pattern1="00010212";
-      pattern2="00102001";
-      pattern3="00101112";
-      pattern4="01112120";
+      color = "aqua";
+      pattern1 = "00010212";
+      pattern2 = "00102001";
+      pattern3 = "00101112";
+      pattern4 = "01112120";
       break;
     case "O":
-      color="mediumpurple";
-      pattern1="00011011";
-      pattern2="00100111";
-      pattern3="00101101";
-      pattern4="00011110";
+      color = "mediumpurple";
+      pattern1 = "00011011";
+      pattern2 = "00100111";
+      pattern3 = "00101101";
+      pattern4 = "00011110";
       break;
     case "S":
-      color="olive";
-      pattern1="01111020";
-      pattern2="00011112";
-      pattern3=pattern1;
-      pattern4=pattern2;
+      color = "olive";
+      pattern1 = "01111020";
+      pattern2 = "00011112";
+      pattern3 = pattern1;
+      pattern4 = pattern2;
       break;
     case "Z":
-      color="navajowhite";
-      pattern1="00101121";
-      pattern2="10110102";
-      pattern3=pattern1;
-      pattern4=pattern2;
+      color = "navajowhite";
+      pattern1 = "00101121";
+      pattern2 = "10110102";
+      pattern3 = pattern1;
+      pattern4 = pattern2;
       break;
     case "T":
-      color="tomato";
-      pattern1="01111021";
-      pattern2="00010211";
-      pattern3="00102011";
-      pattern4="01101112";
+      color = "tomato";
+      pattern1 = "01111021";
+      pattern2 = "00010211";
+      pattern3 = "00102011";
+      pattern4 = "01101112";
       break;
   }
-  this.patterns.push(pattern1,pattern2,pattern3,pattern4);
-  this.pattern=this.patterns[0];
-  //this.topleft=new Vector(-this.squareSide, -cvHeight/2);
-  // var triSide=this.squareSide*10+this.gap*11;
-  // var startY=-10*this.squareSide-9*this.gap-triSide-3;
-  var startY=-this.cx.canvas.height/2-4*this.squareSide-3*this.gap+3;
-  // console.log('startY', startY);
-  this.topleft=new Vector(-this.squareSide, startY);
-  var maxCol=this.pattern[0], maxRow=this.pattern[1];
-  for(var i=0;i<4;i++){
-    col=this.pattern[2*i]; row=this.pattern[2*i+1];
+  this.patterns = [pattern1, pattern2, pattern3, pattern4];
+  this.pattern = this.patterns[0];
 
-    var s=new Square(new Vector(this.topleft.x+col*squareSide, 
-                                this.topleft.y+row*squareSide), squareSide, color, cx);
-    this.squares.push(s);
-    maxCol=Math.max(maxCol, col); maxRow=Math.max(maxRow, row);
-
-  }
-  this.width=(maxCol+1)*this.squareSide+maxCol*this.gap;
-  this.height=(maxRow+1)*this.squareSide+maxRow*this.gap;
+  var self = this;
+  this.build(function(squareIndex, col, row) {
+    var squareTopleft =
+          new Vector(self.topleft.x + col * squareSide + col * self.gap, 
+                     self.topleft.y + row * squareSide + row * self.gap);
+    self.squares[squareIndex] = new Square(squareTopleft, squareSide,
+                                           color, cx);
+  });
 }
-Block.prototype.disappear=function(){  //精确考虑的话，需要调用Square的disappear方法
-  this.squares.forEach(function(s){
+
+//也可以根据block的width和height来“涂抹”block的区域，但为了简单，直接
+//调用square的disappear()。
+Block.prototype.disappear = function() {
+  this.squares.forEach(function(s) {
     s.disappear();
   });
 };
-Block.prototype.display=function(){
-  this.squares.forEach(function(s){
+
+Block.prototype.display = function() {
+  this.squares.forEach(function(s) {
     s.display();
   });
 };
-Block.prototype.rotate=function(angle){
-  if(this.still){
-    this.squares.forEach(function(square){
-      square.rotate(angle);
-    });
-  }
-};
-/*Block.prototype.deform=function(){
+
+Block.prototype.deform = function() {
   this.disappear();
-  for(var i=0;i<this.patterns.length;i++){
-    if(this.pattern==this.patterns[i]){
-      this.pattern=this.patterns[i+1]?this.patterns[i+1]:this.patterns[0];
+  this.invisiblyDeform();
+  this.display();
+};
+
+// just update data, no displaying
+Block.prototype.invisiblyDeform = function() {
+  for (var i = 0; i < this.patterns.length; i++) {
+    if (this.pattern == this.patterns[i]) {
+      this.pattern =
+           this.patterns[i + 1] ? this.patterns[i + 1] : this.patterns[0];
       break;
     }
   }
   this.setSquareCoors();
-  this.display();
-};*/
-
-Block.prototype.setSquareCoors=function(){
-  var maxCol=this.pattern[0], maxRow=this.pattern[1];
-  for(var i=0;i<4;i++){
-    var col=this.pattern[2*i]; var row=this.pattern[2*i+1];
-    this.squares[i].topleft.x=this.topleft.x+col*this.squareSide+col*this.gap;
-    this.squares[i].topleft.y=this.topleft.y+row*this.squareSide+row*this.gap;
-    this.squares[i].moveApexes();
-    maxCol=Math.max(maxCol, col); maxRow=Math.max(maxRow, row);
-  }
-  this.width=(maxCol+1)*this.squareSide+maxCol*this.gap;
-  this.height=(maxRow+1)*this.squareSide+maxRow*this.gap;
 };
+
+Block.prototype.move = function(vector) {
+  this.disappear();
+  this.invisiblyMove(vector);
+  this.display();
+}
+
+// just update data, no displaying
+Block.prototype.invisiblyMove = function(vector) {
+  this.setTopleft(this.topleft.x + vector.x, this.topleft.y + vector.y);
+  this.setSquareCoors();
+}
+
+Block.prototype.setTopleft = function(x, y) {
+  this.topleft.set(x, y);
+}
+
+Block.prototype.setSquareCoors = function() {
+  var self = this;
+  this.build(function(squareIndex, col, row) {
+    self.squares[squareIndex]
+      .setTopleft(self.topleft.x + col * self.squareSide + col * self.gap,
+                  self.topleft.y + row * self.squareSide + row * self.gap);
+    self.squares[squareIndex].moveApexes();
+  })
+};
+
+Block.prototype.build = function(callback) {
+  var maxCol = this.pattern[0], maxRow = this.pattern[1];
+  for (var i = 0; i < 4; i++) {
+    var col = this.pattern[2 * i],
+        row = this.pattern[2 * i + 1];
+    
+    callback(i, col, row);
+
+    maxCol = Math.max(maxCol, col);
+    maxRow = Math.max(maxRow, row);
+  }
+  this.width = (maxCol + 1) * this.squareSide + maxCol * this.gap;
+  this.height = (maxRow + 1) * this.squareSide + maxRow * this.gap;
+}
+
+Block.prototype.copy = function() {
+  var block = new Block(this.topleft.copy(), this.shape,
+                        this.squareSide, this.gap, this.cx);
+  block.setPattern(this.pattern);
+  return block;
+}
+
+Block.prototype.setPattern = function(pattern) {
+  this.pattern = pattern;
+}
