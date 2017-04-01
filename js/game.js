@@ -9,13 +9,15 @@ function Game(squareSide, cx) {
 }
 
 Game.prototype.initialize = function() {
-  var startX = -this.squareSide,
-      startY = -this.cx.canvas.height / 2
-               - 4 * this.squareSide - 3 * this.gap + 3;
-  this.blockTopleft = new Vector(startX, startY);
-
   this.triangleSide = this.squareSide * this.numOfSquareRow
                 + this.gap * (this.numOfSquareRow + 1);
+  this.prepareTriangle();
+  this.prepareLine();
+  
+  var startX = -this.squareSide,
+      startY = -this.triangle.r / 2 - this.triangle.thickness / 2
+               - 12 * (this.squareSide + this.gap);
+  this.blockTopleft = new Vector(startX, startY);
   
   this.inputManager = new InputManager;
   this.storageManager = new StorageManager;
@@ -25,11 +27,7 @@ Game.prototype.initialize = function() {
   var bestScore = this.storageManager.getBestScore();
   this.uiManager.displayBest(bestScore);
 
-  this.prepareTriangle();
-  this.prepareLine();
-
   this.addEvents();
-  
   window.focus();
 }
 
@@ -91,8 +89,8 @@ Game.prototype.prepareTriangle = function() {
 };
 
 Game.prototype.prepareLine = function() {
-  var r2center = this.triangleSide / (Math.sqrt(3) * 2)
-                 + 4 * this.squareSide + 4 * this.gap + 6.5;
+  var r2center = this.triangle.r / 2 + this.triangle.thickness / 2 +
+                 4 * (this.squareSide + this.gap) + 1.5;
   this.line = new Line(this.triangleSide, r2center, "gray", this.cx);
   this.line.display();
 };
@@ -105,6 +103,7 @@ Game.prototype.prepareBlock = function() {
 };
 
 Game.prototype.makeBlockFall = function() {
+  console.log(this.stillSquares.length)
   var block = this.fallingBlock;
   var step = this.squareSide + this.gap;
   var self = this;
@@ -217,47 +216,45 @@ Game.prototype.canRotate = function() {
   }
 };
 
-
 Game.prototype.checkIfShouldClear = function() {
-  var numOfClearedLines = 0, scoreAddition = 0,
+  var numOfClearedLines = 0, scoreAddition,
       step = this.squareSide + this.gap,
-      bottomY = -this.triangleSide / (Math.sqrt(3) * 2),
-      minStillY = this.getMinStillY();
+      topStillY = this.getTopStillY(),
+      bottomStillY = -this.triangle.r / 2 - this.triangle.thickness / 2 - step,
+      squaresAtSameLine = [];
   var self = this;
 
-  for (var y = minStillY; y < bottomY; y += step) {
-    var numAtSameY = 0;
-    this.stillSquares.forEach(function(s) {
-      if (self.approximatelyEqual(y, s.topleft.y)) numAtSameY++;
+  for (var y = bottomStillY; y >= topStillY; y -= step) {
+    self.stillSquares.forEach(function(s) {
+      if (self.approximatelyEqual(y, s.topleft.y)){
+        squaresAtSameLine.push(s);
+      }
     });
-    if (numAtSameY === 10) {
-      this.stillSquares = this.stillSquares.filter(function(s) {
-        if (self.approximatelyEqual(y, s.topleft.y)) {
-          s.disappear();
-        } else {
-          return true;
-        }
+    if (squaresAtSameLine.length === 10) {
+      squaresAtSameLine.forEach(function(s) {
+        s.shouldBeRemoved = true;
+        s.disappear();
       });
-
-      //因为下降会用到disappear方法，所以需要逐层下降
-      for (var yy = y - step; yy >= minStillY; yy -= step) {
-        self.stillSquares.forEach(function(s) {
-          if (self.approximatelyEqual(yy, s.topleft.y)) {
-            s.fall(step);
-          }
+      numOfClearedLines++;
+    } else {
+      if (numOfClearedLines > 0) {
+        squaresAtSameLine.forEach(function(s) {
+          s.fall(step * numOfClearedLines);
         });
       }
-
-      numOfClearedLines++;
-      scoreAddition += numOfClearedLines * 10;
-       
-      if (self.fallingInterval > 500) {
-        self.fallingInterval -= 20;
-        self.uiManager.showLandingInterval(self.fallingInterval);
-      }
     }
+    squaresAtSameLine = [];
   }
-  if (scoreAddition > 0) {
+  
+  if (numOfClearedLines > 0) {
+    self.stillSquares = self.stillSquares.filter(function(s) {
+      return !s.shouldBeRemoved;
+    });
+    if (self.fallingInterval > 500) {
+      self.fallingInterval -= 20 * numOfClearedLines;
+      self.uiManager.showLandingInterval(self.fallingInterval);
+    }
+    scoreAddition = numOfClearedLines * numOfClearedLines * 10;
     self.uiManager.displayScoreAddition(scoreAddition);
     self.score += scoreAddition;
     self.uiManager.displayScore(self.score);
@@ -265,10 +262,9 @@ Game.prototype.checkIfShouldClear = function() {
   }
 };
 
-
 Game.prototype.lose = function() {
   var loseEdge = -this.cx.canvas.height / 2;
-  if (this.getMinStillY() < loseEdge) {
+  if (this.getTopStillY() < loseEdge) {
     this.afterLosing();
     return true;
   }
@@ -309,14 +305,14 @@ Game.prototype.approximatelyEqual = function(num1, num2) {
   return Math.abs(num1 - num2) < 0.1;
 }
 
-Game.prototype.getMinStillY = function() {
-  var minStillY = 0;
+Game.prototype.getTopStillY = function() {
+  var topStillY = 0;
   this.stillSquares.forEach(function(s) {
-    if (s.topleft.y < minStillY) {
-      minStillY = s.topleft.y;
+    if (s.topleft.y < topStillY) {
+      topStillY = s.topleft.y;
     }
   });
-  return minStillY;
+  return topStillY;
 }
 
 // can the falling block fall by itself?
@@ -348,7 +344,7 @@ Game.prototype.canDeform = function() {
 }
 
 Game.prototype.blockHitsSquare = function(block) {
-  var bottomY = -this.triangleSide / (Math.sqrt(3) * 2);
+  var bottomY = -this.triangle.r / 2;
   for (var ii = 0, nn = block.squares.length; ii < nn; ii++) {
     var fallingX = block.squares[ii].topleft.x;
     var fallingY = block.squares[ii].topleft.y;
@@ -367,8 +363,9 @@ Game.prototype.blockHitsSquare = function(block) {
 }
 
 Game.prototype.blockHitsBottom = function(block) {
-  var bottomY = -this.triangleSide / (Math.sqrt(3) * 2);
-  if (block.topleft.y + block.height > bottomY) {
+  var bottomY = -this.triangle.r / 2;
+  if (block.topleft.y + block.height >
+      bottomY - this.triangle.thickness / 2 - this.gap) {
     return true;
   }
   return false;

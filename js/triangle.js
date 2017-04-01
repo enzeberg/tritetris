@@ -8,11 +8,12 @@ function Triangle(angle, r, color, cx) {
                           r * Math.sin(angle + 2 * Math.PI / 3));
   this.apex3 = new Vector(r * Math.cos(angle - 2 * Math.PI / 3),
                           r * Math.sin(angle - 2 * Math.PI / 3));
+  this.thickness = 0.08 * r;
 }
 
 Triangle.prototype.display = function() {
   var cx = this.cx;
-  cx.lineWidth = 0.08 * this.r;
+  cx.lineWidth = this.thickness;
   cx.lineJoin = "round";
   cx.strokeStyle = this.color;
   this.makeClosedPath(cx, this.apex1, this.apex2, this.apex3);

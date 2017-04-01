@@ -10,6 +10,7 @@ function Square(topleft, side, color, cx) {
   this.apexes = [];
   this.apexes.push(this.apex1, this.apex2, this.apex3, this.apex4);
   this.thetas = [];
+  this.shouldBeRemoved = false;
 }
 
 Square.prototype.display = function() {
