@@ -232,8 +232,8 @@ Game.prototype.checkIfShouldClear = function() {
     });
     if (squaresAtSameLine.length === 10) {
       squaresAtSameLine.forEach(function(s) {
-        s.shouldBeRemoved = true;
         s.disappear();
+        self.stillSquares.splice(self.stillSquares.indexOf(s), 1);
       });
       numOfClearedLines++;
     } else {
@@ -247,9 +247,6 @@ Game.prototype.checkIfShouldClear = function() {
   }
   
   if (numOfClearedLines > 0) {
-    self.stillSquares = self.stillSquares.filter(function(s) {
-      return !s.shouldBeRemoved;
-    });
     if (self.fallingInterval > 500) {
       self.fallingInterval -= 20 * numOfClearedLines;
       self.uiManager.showLandingInterval(self.fallingInterval);
