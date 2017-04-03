@@ -135,12 +135,17 @@ Game.prototype.deformBlock = function() {
   if (this.gameOver || this.paused) return;
   var block = this.fallingBlock;
   var oldBlockWidth = block.width;
+  var velocity;
   if (this.canDeform()) {
-    block.deform();
-    if (this.blockHitsRightEdge(block)) {
-
-      // move left to avoid going across the right edge
-      block.move(new Vector(-(block.width - oldBlockWidth), 0));
+    block.deform(true); // deform to be next state
+    if (this.blockHitsRightEdge(block)) {      
+      velocity = new Vector(-(block.width - oldBlockWidth), 0);
+      if (this.canMove(velocity)) { // avoid covering after moving left
+        // move left to avoid going across the right edge
+        block.move(velocity);
+      } else {
+        block.deform(false); // deform to be previous state
+      }
     }
   }
 };
@@ -223,10 +228,12 @@ Game.prototype.checkIfShouldClear = function() {
       bottomStillY = -this.triangle.r / 2 - this.triangle.thickness / 2 - step,
       squaresAtSameLine = [];
   var self = this;
-
-  for (var y = bottomStillY; y >= topStillY; y -= step) {
+  
+  // the loop condition can't be y >= topStillY or y > topStillY - step,
+  // because these variables are all numbers.
+  for (var y = bottomStillY; y > topStillY - step / 2; y -= step) {
     self.stillSquares.forEach(function(s) {
-      if (self.approximatelyEqual(y, s.topleft.y)){
+      if (self.approximatelyEqual(y, s.topleft.y)) {
         squaresAtSameLine.push(s);
       }
     });

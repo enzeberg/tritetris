@@ -89,21 +89,24 @@ Block.prototype.display = function() {
   });
 };
 
-Block.prototype.deform = function() {
+Block.prototype.deform = function(gotoNext) {
   this.disappear();
-  this.invisiblyDeform();
+  this.invisiblyDeform(gotoNext);
   this.display();
 };
 
 // just update data, no displaying
-Block.prototype.invisiblyDeform = function() {
-  for (var i = 0; i < this.patterns.length; i++) {
-    if (this.pattern == this.patterns[i]) {
-      this.pattern =
-           this.patterns[i + 1] ? this.patterns[i + 1] : this.patterns[0];
-      break;
-    }
+Block.prototype.invisiblyDeform = function(gotoNext) {
+  var val = gotoNext ? 1 : -1; // go to next or go to previous
+  var index = this.patterns.indexOf(this.pattern);
+  if (index + val > 3) {
+    index = 0;
+  } else if (index + val < 0) {
+    index = 3;
+  } else {
+    index += val;
   }
+  this.pattern = this.patterns[index];
   this.setSquareCoors();
 };
 
