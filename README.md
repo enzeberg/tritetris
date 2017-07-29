@@ -5,7 +5,7 @@ high as possible.</p>
 <p>It's an HTML game. <a href="https://enzeberg.github.io/tritetris">Play it here!</a></p>
 
 ## Screenshot
-<img src="./images/tritetris.png">
+<img src="./images/screenshot.png">
 
 ## How to play
 <h4>[for Desktop] </h4>
