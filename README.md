@@ -22,3 +22,6 @@ high as possible.</p>
 ## Reminder
 <p>The more rows of squares you remove one time, the higher score you get!</p>
 
+## License
+MIT
+
