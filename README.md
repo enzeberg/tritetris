@@ -8,9 +8,9 @@ high as possible.</p>
 <img src="./images/screenshot.png">
 
 ## How to play
-<h4>[for Desktop] </h4>
+### for Desktop
 <p>Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.</p>
-<h4>[for Mobile]</h4>
+### for Mobile
 <p>Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.</p>
 
 ## Note
