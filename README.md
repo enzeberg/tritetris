@@ -9,15 +9,14 @@ high as possible.</p>
 
 ## How to play
 ### for Desktop
-<p>Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.</p>
+Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.
 ### for Mobile
-<p>Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.</p>
+Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.
 
 ## Note
-<ul>
-	<li>When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle.</li>
-	<li>When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
-</ul>
+- When the falling tetromino is totally under the minddle thin line, you can't rotate the triangle.
+- When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.
+
 
 ## Reminder
 <p>The more rows of squares you remove one time, the higher score you get!</p>
