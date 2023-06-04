@@ -10,7 +10,6 @@
     <meta name="MobileOptimized" content="320">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui"> -->
-
     <meta property="og:title" content="Tritetris"/>
     <meta property="og:site_name" content="Tritetris"/>
     <meta property="og:description" content="Tritetris is a game that extends from Tetris."/>
@@ -31,7 +30,6 @@
             <div class="replay-btn">Enjoy Again</div>
           </div>
         </div>
-        
         <div class="top-area">
           <div class="landing-interval">Landing Interval:     
             <span class="interval-value"></span>
@@ -43,9 +41,7 @@
             </div>
           </div>
         </div>
-
         <canvas width="500" height="500" class="game-canvas" style="background-color:rgb(200,180,150)"></canvas>
-        
         <div class="bottom-area">
           <div class="pause-or-continue-btn">Pause</div>
           <div class="deform-btn">Deform</span></div>
@@ -53,36 +49,41 @@
           <div class="anticlockwise-btn">Anticlockwise</div>
         </div>     
       </div>
-
       <div class="introduction">
         <div class="how-to-play">
-          <h3>HOW TO PLAY:</h3>
-          <h4>[for Desktop]  <span style="font-style: italic;">(Recommended)</span></h4>
-          <p>Use the <strong>arrow keys</strong> to move and deform the block, and key <strong>"A" and "D"</strong> to rotate the triangle.</p>
-
-          <h4>[for Mobile]</h4>
-          <p>Use the <strong>center gray area</strong> to move and deform the block, and the <strong>buttons</strong> to rotate the triangle.</p>
+          <h3>How to play:</h3>
+          <h4>for Desktop</h4>
+          <ul>
+            <li>Arrow Keys: move the Tetris blocks</li>
+            <li>Up Arrow Key: deform the Tetris blocks</li>
+            <li>A / D: rotate the triangle</li>
+          </ul>
+          <h4>for Mobile</h4>
+          <p>Touch the <strong>canvas</strong> to move the Tetris blocks.</p>
         </div>
-
+        <div class="tips">
+          <h3>Tips:</h3>
+          <p>The more squares you clear at once, the higher the score you get!</p>
+        </div>
         <div class="note">
-          <h3>NOTE:</h3>
+          <h3>Note:</h3>
           <ul>
             <li>When the falling tetromino is totally under the middle thin line, you can't rotate the triangle.</li>
             <li>When the falling tetromino hits the squares fixed on the triangle after rotating, the tetromino goes up to avoid covering the still squares.</li>
           </ul>
         </div>
-
-        <div class="reminder">
-          <h3>REMINDER:</h3>
-          <p>The more rows of squares you remove one time, the higher score you get!</p>
-        </div>
-
         <div class="about">
-          <p>a Li Enze game</p>
+          <p>
+            <a href="https://github.com/enzeberg" target="_blank">
+              https://github.com/enzeberg/tritetris
+            </a>
+          </p>
+          <p>
+            Created by <a href="https://github.com/enzeberg" target="_blank" rel="noreferrer">Li Enze</a>
+        </p>
         </div>
       </div>
     </div>
-
     <script src="./js/vector.js"></script>  
     <script src="./js/triangle.js"></script>
     <script src="./js/line.js"></script>
@@ -92,7 +93,6 @@
     <script src="./js/local_storage_manager.js"></script>
     <script src="./js/ui_manager.js"></script>
     <script src="./js/game.js"></script>
-    
     <script>
       (function(){
         var cv = document.querySelector("canvas");

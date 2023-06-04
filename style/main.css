@@ -12,7 +12,6 @@ body{
 h1.title{
   font-size: 60px;
   color: rgb(200,180,150);
-  
 }
 
 .container{
@@ -39,33 +38,39 @@ h1.title{
     opacity: 1;
   }
   to{
-    top: -100px;;
+    top: -100px;
     opacity: 0;
   }
 }
 @-webkit-keyframes go-up {
   from {
     top: -40px;
-    opacity: 1; }
+    opacity: 1;
+  }
   to {
-    top: -100px;;
-    opacity: 0; } 
+    top: -100px;
+    opacity: 0;
+  } 
 }
 @-moz-keyframes go-up {
   from {
     top: -40px;
-    opacity: 1; }
+    opacity: 1;
+  }
   to {
-    top: -100px;;
-    opacity: 0; } 
+    top: -100px;
+    opacity: 0;
+  } 
 }
 @-o-keyframes go-up {
   from {
     top: -40px;
-    opacity: 1; }
+    opacity: 1;
+  }
   to {
-    top: -100px;;
-    opacity: 0; } 
+    top: -100px;
+    opacity: 0;
+  } 
 }
 .score-and-best .score-addition{ 
   text-align: center;
@@ -119,7 +124,6 @@ canvas{
   margin: 20px auto;
   padding: 10px 5px;
   border-radius: 3px;
-
 }
 
 .bottom-area .pause-or-continue-btn, .deform-btn, .clockwise-btn, .anticlockwise-btn{
@@ -135,24 +139,20 @@ canvas{
   color: white;
 }
 
-
 .introduction{
   padding-top: 70px;
   color:gray;
-  
 }
-.how-to-play, .note, .reminder{
+.how-to-play, .tips, .note{
   border-bottom: 1px solid #d8d4d0;
 }
 .about{
-
   text-align: center;
 }
 
 @media screen and (max-width: 520px){
   body{
     font-size: 15px;
-
   }
   h1.title{
     font-size: 30px;
@@ -190,6 +190,5 @@ canvas{
   }
   .introduction{
     padding-top: 110px;
-    
   }
 }
